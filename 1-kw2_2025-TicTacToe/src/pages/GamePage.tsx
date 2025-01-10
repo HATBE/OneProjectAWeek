@@ -10,8 +10,7 @@ export default function GamePage() {
   const [board, setBoard] = useState<CellState[][]>([]);
   const [currentPlayer, setCurrentPlayer] = useState<CellState>(CellState.X);
   const [winner, setWinner] = useState<CellState | null>(null);
-
-  const debug = false;
+  const [draw, setDraw] = useState<boolean>(false);
 
   const generateNewBoard = () => {
     const grid: CellState[][] = [[]];
@@ -30,6 +29,17 @@ export default function GamePage() {
     } else {
       setCurrentPlayer(CellState.X);
     }
+  };
+
+  const isDraw = (): boolean => {
+    let emptyNum = 0;
+    board.forEach((row) => {
+      if (row.includes(CellState.EMPTY)) {
+        return emptyNum++;
+      }
+    });
+
+    return emptyNum < 1;
   };
 
   const validateWinner = (): boolean => {
@@ -61,6 +71,9 @@ export default function GamePage() {
     ) {
       setWinner(currentPlayer);
       return true;
+    } else if (isDraw()) {
+      setDraw(true);
+      return true;
     }
 
     return false;
@@ -90,6 +103,7 @@ export default function GamePage() {
     generateNewBoard();
     setCurrentPlayer(CellState.X);
     setWinner(null);
+    setDraw(false);
   };
 
   const printCell = (cell: CellState) => {
@@ -103,7 +117,7 @@ export default function GamePage() {
   return (
     <div className="backdrop">
       {winner && (
-        <div className="winner-banner">
+        <div className="banner winner-banner">
           <span>
             Player {winner} won the Game{" "}
             <span className="link" onClick={resetGame}>
@@ -113,11 +127,24 @@ export default function GamePage() {
         </div>
       )}
 
-      <div>
-        <div className="current-player">
-          <span className="current-player-text">Current Player:</span>{" "}
-          <span className="player-orb">{currentPlayer}</span>
+      {draw && (
+        <div className="banner draw-banner">
+          <span>
+            Draw{" "}
+            <span className="link" onClick={resetGame}>
+              Play again?
+            </span>
+          </span>
         </div>
+      )}
+
+      <div>
+        {!draw && !winner && (
+          <div className="current-player">
+            <span className="current-player-text">Current Player:</span>{" "}
+            <span className="player-orb">{currentPlayer}</span>
+          </div>
+        )}
 
         <div>
           {board.map((row, rowNumber) => (
@@ -130,11 +157,8 @@ export default function GamePage() {
                   className="grid-item"
                   key={cellNumber}
                 >
-                  <span className="player-orb">{printCell(cell)}</span>
-                  {debug && (
-                    <>
-                      {rowNumber}/{cellNumber}{" "}
-                    </>
+                  {printCell(cell) !== CellState.EMPTY && (
+                    <span className="player-orb">{printCell(cell)}</span>
                   )}
                 </div>
               ))}
@@ -145,7 +169,3 @@ export default function GamePage() {
     </div>
   );
 }
-
-// TODO: handle draw
-// TODO: style the winning path with red or so
-// TODO: if empty dont show player orb

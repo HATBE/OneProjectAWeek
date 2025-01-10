@@ -39,12 +39,19 @@ body {
 }
 
 .winner-banner {
+  background-color: rgb(106, 180, 106);
+}
+
+.draw-banner {
+  background-color: rgb(236, 236, 167);
+}
+
+.banner {
   position: absolute;
   top: 0;
   width: 100%;
-  background-color: red;
   padding: 20px;
-  font-size: 60px;
+  font-size: 30px;
   color: white;
   display: flex;
   justify-content: center;
