@@ -1,0 +1,89 @@
+:root {
+  --gridColor: #000;
+  --gridWidth: 4px;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+}
+
+.grid-item {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  user-select: none !important;
+}
+
+.grid-item:nth-child(2) {
+  border-right: var(--gridWidth) var(--gridColor) solid;
+  border-left: var(--gridWidth) var(--gridColor) solid;
+}
+
+.row:nth-child(2) .grid-item {
+  border-top: var(--gridWidth) var(--gridColor) solid;
+  border-bottom: var(--gridWidth) var(--gridColor) solid;
+}
+
+.winner-banner {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background-color: red;
+  padding: 20px;
+  font-size: 60px;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.backdrop {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link {
+  color: black;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.current-player {
+  padding: 40px 0px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.current-player-text {
+  margin-right: 10px;
+}
+
+.player-orb {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  background-color: aqua;
+  border-radius: 5px;
+}
