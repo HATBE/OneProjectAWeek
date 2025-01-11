@@ -40,11 +40,11 @@ body {
   border-bottom: var(--gridWidth) var(--gridColor) solid;
 }
 
-.winner-banner {
+.winner.banner {
   background-color: rgb(106, 180, 106);
 }
 
-.draw-banner {
+.draw.banner {
   background-color: rgb(156, 156, 63);
 }
 

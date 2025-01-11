@@ -1,4 +1,6 @@
 import { useLayoutEffect, useState } from "react";
+import Banner from "../components/Banner";
+import PlayerOrb from "../components/PlayerOrb";
 
 enum Player {
   X = "X",
@@ -66,10 +68,10 @@ export default function GamePage() {
   const generateNewEmptyBoard = (): void => {
     const board: (Player | null)[][] = [];
 
-    for (let i = 0; i < 3; i++) {
-      board[i] = [];
-      for (let j = 0; j < 3; j++) {
-        board[i][j] = null;
+    for (let row = 0; row < 3; row++) {
+      board[row] = [];
+      for (let col = 0; col < 3; col++) {
+        board[row][col] = null;
       }
     }
 
@@ -89,10 +91,13 @@ export default function GamePage() {
       }
     });
 
+    // if there are no empty fields (and the winner check was checked before, it is a draw)
     return emptyFieldsNum < 1;
   };
 
-  const validateWinner = (): boolean => {
+  // returns false if game moves on, true if game ended
+  const validateGameMove = (): boolean => {
+    // check if winner exists
     for (const combination of winningCombinations) {
       if (
         combination.every(([row, col]) => board[row][col] === currentPlayer)
@@ -103,6 +108,7 @@ export default function GamePage() {
       }
     }
 
+    // otherwise check for draw
     if (isDraw()) {
       setDraw(true);
       return true;
@@ -111,20 +117,22 @@ export default function GamePage() {
     return false;
   };
 
-  const handleGridItemClick = (row: number, cell: number) => {
-    if (winner) {
+  const handleGridItemClick = (row: number, cell: number): void => {
+    if (winner || draw) {
       return;
     }
 
+    // if grid item is not empty (X or O isset) return
     if (board[row][cell] !== null) {
       return;
     }
 
-    const newGrid = board;
+    const newGrid = [...board];
     newGrid[row][cell] = currentPlayer;
     setBoard(newGrid);
 
-    if (validateWinner()) {
+    // if there is a winner / draw, return and handle
+    if (validateGameMove()) {
       return;
     }
 
@@ -139,18 +147,18 @@ export default function GamePage() {
     setWinningCells(null);
   };
 
-  const printCell = (cell: Player | null) => {
-    return cell;
-  };
-
-  const markCell = (row: number, col: number): boolean => {
+  const cellClass = (row: number, col: number): string => {
     if (!winningCells) {
-      return false;
+      return "";
     }
 
-    return winningCells.some(
-      ([winRow, winCol]) => winRow === row && winCol === col
-    );
+    if (
+      winningCells.some(([winRow, winCol]) => winRow === row && winCol === col)
+    ) {
+      return "winning-cell";
+    }
+
+    return "";
   };
 
   useLayoutEffect(() => {
@@ -160,32 +168,26 @@ export default function GamePage() {
   return (
     <div className="backdrop">
       {winner && (
-        <div className="banner winner-banner">
-          <span>
-            Player {winner} won the Game{" "}
-            <span className="link" onClick={resetGame}>
-              Play again?
-            </span>
-          </span>
-        </div>
+        <Banner
+          cName="winner"
+          text={`Player ${winner} won the Game!`}
+          resetGame={resetGame}
+        />
       )}
 
       {draw && (
-        <div className="banner draw-banner">
-          <span>
-            Draw{" "}
-            <span className="link" onClick={resetGame}>
-              Play again?
-            </span>
-          </span>
-        </div>
+        <Banner
+          cName="draw"
+          text={`The game ended in a Draw!`}
+          resetGame={resetGame}
+        />
       )}
 
       <div>
         {!draw && !winner && (
           <div className="current-player">
             <span className="current-player-text">Current Player:</span>{" "}
-            <span className="player-orb">{currentPlayer}</span>
+            <PlayerOrb text={currentPlayer} />
           </div>
         )}
 
@@ -200,14 +202,11 @@ export default function GamePage() {
                   className="grid-item"
                   key={colNumber}
                 >
-                  {printCell(cell) !== null && (
-                    <span
-                      className={`player-orb ${
-                        markCell(rowNumber, colNumber) ? "winning-cell" : ""
-                      }`}
-                    >
-                      {printCell(cell)}
-                    </span>
+                  {cell !== null && (
+                    <PlayerOrb
+                      text={cell}
+                      cName={cellClass(rowNumber, colNumber)}
+                    />
                   )}
                 </div>
               ))}
