@@ -1,5 +1,5 @@
 :root {
-  --gridColor: #000;
+  --gridColor: #fff;
   --gridWidth: 4px;
 }
 
@@ -7,6 +7,8 @@ body {
   padding: 0;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  background-color: #1c1c1c;
+  color: white;
 }
 
 * {
@@ -43,7 +45,7 @@ body {
 }
 
 .draw-banner {
-  background-color: rgb(236, 236, 167);
+  background-color: rgb(156, 156, 63);
 }
 
 .banner {
@@ -91,6 +93,10 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 40px;
-  background-color: aqua;
+  background-color: rgb(24, 155, 155);
   border-radius: 5px;
+}
+
+.winning-cell {
+  background-color: red !important;
 }
