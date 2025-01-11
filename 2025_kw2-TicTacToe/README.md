@@ -4,7 +4,7 @@
 
 - Plain old React
 
-## Screenshits
+## Screenshots
 
 ### GAME
 
