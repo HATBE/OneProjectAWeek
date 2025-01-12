@@ -5,63 +5,13 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #000;
-  color: #00ff00;
+
   font-family: Consolas;
   user-select: none !important;
   overflow: hidden;
 }
 
-.console {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+main {
   width: 100lvw;
   height: 100lvh;
-}
-
-.console-output {
-  overflow-y: hidden;
-  overflow-x: auto;
-}
-
-.console-input {
-  margin: 10px 0 10px 10px;
-  overflow: hidden;
-  line-height: 1em;
-}
-
-.cursor {
-  display: inline-block;
-  position: relative;
-  width: 1ch;
-  height: 1em;
-  line-height: 1em;
-}
-
-.cursor::before {
-  content: "";
-  border-right: white 2px solid;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  animation: blink-animation 2s infinite;
-  z-index: -1;
-}
-
-@keyframes blink-animation {
-  0% {
-    opacity: 0;
-  }
-  30% {
-    opacity: 1;
-  }
-  80% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
 }

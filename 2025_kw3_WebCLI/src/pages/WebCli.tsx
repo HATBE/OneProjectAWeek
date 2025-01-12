@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import "./webCli.css";
 
 export default function WebCli() {
-  const [currentConsoleText, setCurrentConsoleText] = useState<string>("LOREM");
+  const [currentConsoleText, setCurrentConsoleText] = useState<string>("");
   const [cursorPosition, setCursorPosition] = useState<number>(0);
 
   const keysAllowed = new RegExp("^[A-Za-z0-9äöü ]$");
@@ -22,10 +23,8 @@ export default function WebCli() {
   const deleteIsPressed = (): void => {
     console.log("before", currentConsoleText.length, `"${currentConsoleText}"`);
     if (cursorPosition > currentConsoleText.length - 1) {
-      console.log("no delete");
       return;
     }
-    console.log("delete");
 
     setCurrentConsoleText(
       (prevText) =>
@@ -54,9 +53,9 @@ export default function WebCli() {
   const appendNewCharToConsole = (keyPressed: string) => {
     setCurrentConsoleText(
       (prevText) =>
-        prevText.substring(0, cursorPosition) +
+        prevText.substring(0, cursorPosition + 1) +
         keyPressed +
-        prevText.substring(cursorPosition)
+        prevText.substring(cursorPosition + 1)
     );
     setCursorPosition((prevPosition) => prevPosition + 1);
   };
@@ -75,9 +74,9 @@ export default function WebCli() {
 
     return (
       <div>
-        {`$ ${textBeforeCursor}`}
+        <span className="white-text">&gt;</span> {textBeforeCursor}
         <span className="cursor">{textAtCursor}</span>
-        {textAfterCursor}
+        <span>{textAfterCursor}</span>
       </div>
     );
   };
