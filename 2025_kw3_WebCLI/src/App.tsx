@@ -1,6 +1,6 @@
 import "./App.css";
-import ConsoleWrapper from "./pages/consoleWrapper/ConsoleWrapper";
-import WebCli from "./pages/webCli/WebCli";
+import ConsoleWrapper from "./compoennts/consoleWrapper/ConsoleWrapper";
+import WebCli from "./compoennts/webCli/WebCli";
 
 function App() {
   return (

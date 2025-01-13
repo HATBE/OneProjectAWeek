@@ -12,8 +12,8 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
   const keysAllowed = new RegExp("^[A-Za-z0-9äöü ]$");
 
   const ctrlVIsPressed = async (): Promise<void> => {
-    const clipboard = await navigator.clipboard.readText();
-    setCurrentConsoleText(clipboard);
+    const clipboardText = await navigator.clipboard.readText();
+    addTextToCursorPosition(clipboardText, true);
   };
 
   const backSpaceIsPressed = (): void => {
@@ -57,14 +57,20 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
     setCursorPosition((prevPosition) => prevPosition - 1);
   };
 
-  const appendNewCharToConsole = (keyPressed: string) => {
+  const addTextToCursorPosition = (
+    text: string,
+    cursorStay: boolean = false
+  ) => {
     setCurrentConsoleText(
       (prevText) =>
-        prevText.substring(0, cursorPosition + 1) +
-        keyPressed +
-        prevText.substring(cursorPosition + 1)
+        prevText.substring(0, cursorPosition) +
+        text +
+        prevText.substring(cursorPosition)
     );
-    setCursorPosition((prevPosition) => prevPosition + 1);
+
+    if (!cursorStay) {
+      setCursorPosition((prevPosition) => prevPosition + 1);
+    }
   };
 
   const enterIsPressed = (): void => {
@@ -120,7 +126,7 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
     }
 
     if (keysAllowed.test(keyPressed)) {
-      appendNewCharToConsole(keyPressed);
+      addTextToCursorPosition(keyPressed);
     }
   };
 
@@ -134,10 +140,3 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
 
   return <div className="console-input">{renderConsoleInput()}</div>;
 }
-
-/**
- * TODO:
- *
- * - fix when cursor is inbetween
- *
- */
