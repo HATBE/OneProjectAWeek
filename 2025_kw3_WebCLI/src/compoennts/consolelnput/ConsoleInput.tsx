@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./ConsoleInput.css";
+import ConsoleDataStorage from "../../ConsoleDataStorage";
 
 type ConsoleInputProps = {
   outputText: (text: string) => void;
@@ -14,6 +15,10 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
   const ctrlVIsPressed = async (): Promise<void> => {
     const clipboardText = await navigator.clipboard.readText();
     addTextToCursorPosition(clipboardText);
+  };
+
+  const ctrlLIsPressed = async (): Promise<void> => {
+    ConsoleDataStorage.getInstance().clear();
   };
 
   const backSpaceIsPressed = (): void => {
@@ -114,6 +119,11 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
 
     if (event.ctrlKey && event.key === "v") {
       ctrlVIsPressed();
+      return;
+    }
+
+    if (event.ctrlKey && event.key === "l") {
+      ctrlLIsPressed();
       return;
     }
 
