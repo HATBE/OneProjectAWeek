@@ -14,4 +14,13 @@ body {
 main {
   width: 100lvw;
   height: 100lvh;
+  display: flex;
+  justify-content: center;
+  background-color: #1c1c1c;
+  align-items: center;
+}
+
+.cli-container {
+  width: 1000px;
+  height: 500px;
 }

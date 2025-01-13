@@ -8,7 +8,20 @@ export default function WebCli() {
   const keysAllowed = new RegExp("^[A-Za-z0-9äöü ]$");
 
   const backSpaceIsPressed = (): void => {
-    if (cursorPosition < 0) {
+    if (cursorPosition <= 0) {
+      return;
+    }
+
+    setCurrentConsoleText(
+      (prevText) =>
+        prevText.substring(0, cursorPosition - 1) +
+        prevText.substring(cursorPosition)
+    );
+    setCursorPosition((prevPosition) => prevPosition - 1);
+  };
+
+  const deleteIsPressed = (): void => {
+    if (cursorPosition > currentConsoleText.length - 1) {
       return;
     }
 
@@ -17,21 +30,6 @@ export default function WebCli() {
         prevText.substring(0, cursorPosition) +
         prevText.substring(cursorPosition + 1)
     );
-    setCursorPosition((prevPosition) => prevPosition - 1);
-  };
-
-  const deleteIsPressed = (): void => {
-    console.log("before", currentConsoleText.length, `"${currentConsoleText}"`);
-    if (cursorPosition > currentConsoleText.length - 1) {
-      return;
-    }
-
-    setCurrentConsoleText(
-      (prevText) =>
-        prevText.substring(0, cursorPosition + 1) +
-        prevText.substring(cursorPosition + 2)
-    );
-    console.log("after", currentConsoleText.length, `"${currentConsoleText}"`);
   };
 
   const moveCursorRight = (): void => {
@@ -43,7 +41,7 @@ export default function WebCli() {
   };
 
   const moveCursorLeft = (): void => {
-    if (cursorPosition < 0) {
+    if (cursorPosition <= 0) {
       return;
     }
 
@@ -66,16 +64,20 @@ export default function WebCli() {
   };
 
   const renderConsoleInput = (): JSX.Element => {
-    const textBeforeCursor = currentConsoleText.substring(0, cursorPosition);
-    const textAtCursor = currentConsoleText.charAt(cursorPosition);
-    const textAfterCursor = currentConsoleText.substring(cursorPosition + 1);
+    const textBeforeCursor = currentConsoleText
+      .substring(0, cursorPosition)
+      .replace(/ /g, "\u00A0");
 
-    console.log(`"${textAtCursor}"`);
+    const cursor = ""; // A block character to visually represent the cursor
+    const textAfterCursor = currentConsoleText
+      .substring(cursorPosition)
+      .replace(/ /g, "\u00A0");
 
     return (
       <div>
-        <span className="white-text">&gt;</span> {textBeforeCursor}
-        <span className="cursor">{textAtCursor}</span>
+        <span className="white-text chevron">&gt;</span>
+        <span>{textBeforeCursor}</span>
+        <span className="cursor">{cursor}</span>
         <span>{textAfterCursor}</span>
       </div>
     );
@@ -123,10 +125,3 @@ export default function WebCli() {
     </div>
   );
 }
-
-/** TODO:
- - fix cursor
- - fix text addition
- - fix space before text (cursor)
- - fix space after text (cursor)
-*/

@@ -4,7 +4,9 @@ import WebCli from "./pages/WebCli";
 function App() {
   return (
     <main>
-      <WebCli />
+      <div className="cli-container">
+        <WebCli />
+      </div>
     </main>
   );
 }
