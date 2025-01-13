@@ -24,3 +24,7 @@ main {
   width: 1000px;
   height: 500px;
 }
+
+.white-text {
+  color: white !important;
+}

@@ -1,11 +1,14 @@
 import "./App.css";
-import WebCli from "./pages/WebCli";
+import ConsoleWrapper from "./pages/consoleWrapper/ConsoleWrapper";
+import WebCli from "./pages/webCli/WebCli";
 
 function App() {
   return (
     <main>
       <div className="cli-container">
-        <WebCli />
+        <ConsoleWrapper>
+          <WebCli />
+        </ConsoleWrapper>
       </div>
     </main>
   );

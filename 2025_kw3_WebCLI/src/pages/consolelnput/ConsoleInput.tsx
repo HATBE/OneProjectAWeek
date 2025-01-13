@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
-import "./webCli.css";
+import "./ConsoleInput.css";
 
-export default function WebCli() {
+type ConsoleInputProps = {
+  outputText: (text: string) => void;
+};
+
+export default function ConsoleInput({ outputText }: ConsoleInputProps) {
   const [currentConsoleText, setCurrentConsoleText] = useState<string>("");
   const [cursorPosition, setCursorPosition] = useState<number>(0);
 
   const keysAllowed = new RegExp("^[A-Za-z0-9äöü ]$");
+
+  const ctrlVIsPressed = async (): Promise<void> => {
+    const clipboard = await navigator.clipboard.readText();
+    setCurrentConsoleText(clipboard);
+  };
 
   const backSpaceIsPressed = (): void => {
     if (cursorPosition <= 0) {
@@ -59,6 +68,7 @@ export default function WebCli() {
   };
 
   const enterIsPressed = (): void => {
+    outputText(currentConsoleText);
     setCurrentConsoleText("");
     setCursorPosition(0);
   };
@@ -68,7 +78,6 @@ export default function WebCli() {
       .substring(0, cursorPosition)
       .replace(/ /g, "\u00A0");
 
-    const cursor = ""; // A block character to visually represent the cursor
     const textAfterCursor = currentConsoleText
       .substring(cursorPosition)
       .replace(/ /g, "\u00A0");
@@ -77,7 +86,7 @@ export default function WebCli() {
       <div>
         <span className="white-text chevron">&gt;</span>
         <span>{textBeforeCursor}</span>
-        <span className="cursor">{cursor}</span>
+        <span className="cursor"></span>
         <span>{textAfterCursor}</span>
       </div>
     );
@@ -89,6 +98,11 @@ export default function WebCli() {
     const keyPressed = event.key;
 
     if (!keyPressed) {
+      return;
+    }
+
+    if (event.ctrlKey && event.key === "v") {
+      ctrlVIsPressed();
       return;
     }
 
@@ -118,10 +132,12 @@ export default function WebCli() {
     };
   }, [cursorPosition, currentConsoleText]);
 
-  return (
-    <div className="console">
-      <div className="console-output"></div>
-      <div className="console-input">{renderConsoleInput()}</div>
-    </div>
-  );
+  return <div className="console-input">{renderConsoleInput()}</div>;
 }
+
+/**
+ * TODO:
+ *
+ * - fix when cursor is inbetween
+ *
+ */
