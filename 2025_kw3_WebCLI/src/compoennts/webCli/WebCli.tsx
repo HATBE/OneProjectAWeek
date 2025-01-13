@@ -12,14 +12,24 @@ export default function WebCli() {
   );
 
   const handleConsoleInput = (text: string): void => {
-    if (text === "clear") {
-      new ClearCommand();
+    const cmdStrg: string[] = text.split(" ");
+    const cmd: string = cmdStrg[0];
+    cmdStrg.shift();
+    let args: string[] = [];
+    if (cmdStrg) {
+      args = cmdStrg;
+    }
+
+    if (cmd === "clear") {
+      new ClearCommand(args);
+      return;
+    } else if (cmd === "echo") {
+      new EchoCommand(args);
       return;
     } else {
-      if (text === "echo") {
-        new EchoCommand();
-        return;
-      }
+      ConsoleDataStorage.getInstance().addLine(
+        `Sorry! Command "${cmd}" not known!`
+      );
     }
 
     //setConsoleText((prev) => [...prev, text]);
@@ -28,14 +38,14 @@ export default function WebCli() {
   useEffect(() => {
     const storage = ConsoleDataStorage.getInstance();
 
-    const updateData = (lines: string[]) => {
+    const updateConsoleText = (lines: string[]) => {
       setConsoleText([...lines]);
     };
 
-    storage.subscribe(updateData);
+    storage.subscribe(updateConsoleText);
 
     return () => {
-      storage.unsubscribe(updateData);
+      storage.unsubscribe(updateConsoleText);
     };
   }, []);
 

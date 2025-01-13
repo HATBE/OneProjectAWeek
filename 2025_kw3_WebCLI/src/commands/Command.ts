@@ -1,7 +1,9 @@
 export default abstract class Command {
   protected abstract name: string;
+  protected args: string[];
 
-  public constructor() {
+  public constructor(args: string[]) {
+    this.args = args;
     this.handle();
   }
 

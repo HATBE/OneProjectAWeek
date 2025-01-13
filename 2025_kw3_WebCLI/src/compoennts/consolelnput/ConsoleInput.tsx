@@ -74,7 +74,12 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
   };
 
   const enterIsPressed = (): void => {
-    outputText(currentConsoleText);
+    const text = currentConsoleText.trim();
+
+    if (!text) {
+      return;
+    }
+    outputText(text);
     setCurrentConsoleText("");
     setCursorPosition(0);
   };
