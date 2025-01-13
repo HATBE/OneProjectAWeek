@@ -3,6 +3,7 @@ import "./ConsoleInput.css";
 
 type ConsoleInputProps = {
   outputText: (text: string) => void;
+  consoleHTML: HTMLElement | null;
 };
 
 export default function ConsoleInput({ outputText }: ConsoleInputProps) {
@@ -13,7 +14,7 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
 
   const ctrlVIsPressed = async (): Promise<void> => {
     const clipboardText = await navigator.clipboard.readText();
-    addTextToCursorPosition(clipboardText, true);
+    addTextToCursorPosition(clipboardText);
   };
 
   const backSpaceIsPressed = (): void => {
@@ -69,7 +70,7 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
     );
 
     if (!cursorStay) {
-      setCursorPosition((prevPosition) => prevPosition + 1);
+      setCursorPosition((prevPosition) => prevPosition + text.length);
     }
   };
 
@@ -98,7 +99,7 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
     );
   };
 
-  const handleKeyDown = (event: KeyboardEvent): void => {
+  const handleKeyDownEvent = (event: KeyboardEvent): void => {
     event.preventDefault();
 
     const keyPressed = event.key;
@@ -131,10 +132,10 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
   };
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", handleKeyDownEvent);
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDownEvent);
     };
   }, [cursorPosition, currentConsoleText]);
 
