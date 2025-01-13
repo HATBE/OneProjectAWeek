@@ -5,6 +5,7 @@ import ConsoleOutput from "../consoleOutput/ConsoleOutput";
 import ClearCommand from "../../commands/ClearCommand";
 import EchoCommand from "../../commands/EchoCommand";
 import ConsoleDataStorage from "../../ConsoleDataStorage";
+import HelpCommand from "../../commands/HelpCommand";
 
 export default function WebCli() {
   const [consoleText, setConsoleText] = useState<string[]>(
@@ -25,6 +26,9 @@ export default function WebCli() {
       return;
     } else if (cmd === "echo") {
       new EchoCommand(args);
+      return;
+    } else if (cmd === "help") {
+      new HelpCommand(args);
       return;
     } else {
       ConsoleDataStorage.getInstance().addLine(
