@@ -3,7 +3,6 @@ import "./ConsoleInput.css";
 
 type ConsoleInputProps = {
   outputText: (text: string) => void;
-  consoleHTML: HTMLElement | null;
 };
 
 export default function ConsoleInput({ outputText }: ConsoleInputProps) {
