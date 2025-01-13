@@ -1,14 +1,7 @@
 export default abstract class Command {
   protected abstract name: string;
-  protected consoleText: string[];
-  protected setConsoleText: (consoletext: string[]) => void;
 
-  public constructor(
-    consoleText: string[],
-    setConsoleText: (consoletext: string[]) => void
-  ) {
-    this.consoleText = consoleText;
-    this.setConsoleText = setConsoleText;
+  public constructor() {
     this.handle();
   }
 
