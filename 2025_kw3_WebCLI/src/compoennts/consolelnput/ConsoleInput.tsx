@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import "./ConsoleInput.css";
 import ConsoleOutputStorage from "../../ConsoleOutputStorage";
+import CommandsHandler from "../../commands/CommandsHandler";
 
-type ConsoleInputProps = {
-  outputText: (text: string) => void;
-};
-
-export default function ConsoleInput({ outputText }: ConsoleInputProps) {
+export default function ConsoleInput() {
   const [currentConsoleText, setCurrentConsoleText] = useState<string>("");
   const [cursorPosition, setCursorPosition] = useState<number>(0);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
+  const [currentHistroyIndex, setCurrentHistoryIndex] = useState<number>(-1);
 
   const keysAllowed = new RegExp("^[A-Za-z0-9äöü ]$");
 
@@ -91,7 +89,7 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
     }
 
     addCommandToHistory(text);
-    outputText(text);
+    CommandsHandler.getInstance().handleCommand(text);
     setCurrentConsoleText("");
     setCursorPosition(0);
   };
