@@ -1,4 +1,4 @@
-import ConsoleDataStorage from "../ConsoleOutputStorage";
+import ConsoleOutputStorage from "../ConsoleOutputStorage";
 import Command from "./Command";
 
 export default class ClearCommand extends Command {
@@ -7,6 +7,6 @@ export default class ClearCommand extends Command {
   protected usage = "clear";
 
   public handle() {
-    ConsoleDataStorage.getInstance().clear();
+    ConsoleOutputStorage.getInstance().clear();
   }
 }

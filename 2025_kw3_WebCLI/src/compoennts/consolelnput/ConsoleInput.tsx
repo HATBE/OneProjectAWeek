@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./ConsoleInput.css";
-import ConsoleDataStorage from "../../ConsoleOutputStorage";
+import ConsoleOutputStorage from "../../ConsoleOutputStorage";
 
 type ConsoleInputProps = {
   outputText: (text: string) => void;
@@ -19,7 +19,7 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
   };
 
   const ctrlLIsPressed = async (): Promise<void> => {
-    ConsoleDataStorage.getInstance().clear();
+    ConsoleOutputStorage.getInstance().clear();
   };
 
   const backSpaceIsPressed = (): void => {

@@ -1,10 +1,10 @@
 import ConsoleOutputStorage from "../ConsoleOutputStorage";
 import Command from "./Command";
 
-export default class EchoCommand extends Command {
-  protected name = "echo";
-  protected description = "Echos the entered text";
-  protected usage = "echo [text]";
+export default class AlertCommand extends Command {
+  protected name = "alert";
+  protected description = "makes an js alert with the text";
+  protected usage = "alert [message]";
 
   public handle(args: string[]) {
     if (args.length <= 0) {
@@ -13,8 +13,8 @@ export default class EchoCommand extends Command {
       );
     }
 
-    const echoText = args.join(" ");
+    const text = args.join(" ");
 
-    ConsoleOutputStorage.getInstance().addLine(echoText);
+    alert(text);
   }
 }

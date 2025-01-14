@@ -2,12 +2,12 @@ import "./webCli.css";
 import ConsoleInput from "../consolelnput/ConsoleInput";
 import { useEffect, useState } from "react";
 import ConsoleOutput from "../consoleOutput/ConsoleOutput";
-import ConsoleDataStorage from "../../ConsoleOutputStorage";
+import ConsoleOutputStorage from "../../ConsoleOutputStorage";
 import CommandsHandler from "../../commands/CommandsHandler";
 
 export default function WebCli() {
   const [consoleText, setConsoleText] = useState<string[]>(
-    ConsoleDataStorage.getInstance().getLines()
+    ConsoleOutputStorage.getInstance().getLines()
   );
 
   const handleConsoleInput = (text: string): void => {
@@ -15,7 +15,7 @@ export default function WebCli() {
   };
 
   useEffect(() => {
-    const storage = ConsoleDataStorage.getInstance();
+    const storage = ConsoleOutputStorage.getInstance();
 
     const updateConsoleText = (lines: string[]) => {
       setConsoleText([...lines]);

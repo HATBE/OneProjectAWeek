@@ -1,4 +1,5 @@
-import ConsoleDataStorage from "../ConsoleOutputStorage";
+import ConsoleOutputStorage from "../ConsoleOutputStorage";
+import AlertCommand from "./AlertCommand";
 import ClearCommand from "./ClearCommand";
 import Command from "./Command";
 import EchoCommand from "./EchoCommand";
@@ -27,6 +28,7 @@ export default class CommandsHandler {
     this.registerCommand("help", new HelpCommand());
     this.registerCommand("clear", new ClearCommand());
     this.registerCommand("echo", new EchoCommand());
+    this.registerCommand("alert", new AlertCommand());
   }
 
   public registerCommand(name: string, comandClass: Command): void {
@@ -56,7 +58,7 @@ export default class CommandsHandler {
     const cmd = this.commands.find((cmd) => cmd.name === command);
 
     if (!cmd) {
-      ConsoleDataStorage.getInstance().addLine(
+      ConsoleOutputStorage.getInstance().addLine(
         `Sorry! Command "${command}" not known!`
       );
       return;
@@ -65,3 +67,8 @@ export default class CommandsHandler {
     cmd.command.handle(args);
   }
 }
+
+//**
+// * TODO:
+// * color command
+// */

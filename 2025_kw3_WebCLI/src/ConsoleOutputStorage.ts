@@ -1,16 +1,16 @@
 type Listener = (data: string[]) => void;
 
-export default class ConsoleDataStorage {
-  private static instance: ConsoleDataStorage | null = null;
+export default class ConsoleOutputStorage {
+  private static instance: ConsoleOutputStorage | null = null;
 
   private lines: string[] = [];
   private listeners: Set<Listener> = new Set();
 
-  public static getInstance(): ConsoleDataStorage {
-    if (!ConsoleDataStorage.instance) {
-      ConsoleDataStorage.instance = new ConsoleDataStorage();
+  public static getInstance(): ConsoleOutputStorage {
+    if (!ConsoleOutputStorage.instance) {
+      ConsoleOutputStorage.instance = new ConsoleOutputStorage();
     }
-    return ConsoleDataStorage.instance;
+    return ConsoleOutputStorage.instance;
   }
 
   public addLine(line: string): void {
@@ -18,12 +18,19 @@ export default class ConsoleDataStorage {
     this.notifyListeners();
   }
 
-  public addEmptyLine(): void {
-    this.addLine("\u00A0");
+  public addLines(lines: string[]) {
+    lines.forEach((line) => {
+      this.lines.push(line);
+    });
+    this.notifyListeners();
   }
 
-  public addSeperator(): void {
-    this.addLine("---------------");
+  public getEmptyLine(): string {
+    return "\u00A0";
+  }
+
+  public getSeperator(): string {
+    return "---------------";
   }
 
   public clear(): void {

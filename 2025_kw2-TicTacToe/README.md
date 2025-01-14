@@ -17,3 +17,7 @@
 ### DRAW
 
 ![](.img/draw.png)
+
+Video: https://www.youtube.com/watch?v=JAPBo5zooXE
+
+[![Youtube video](https://img.youtube.com/vi/JAPBo5zooXE/0.jpg)](https://www.youtube.com/watch?v=JAPBo5zooXE)
