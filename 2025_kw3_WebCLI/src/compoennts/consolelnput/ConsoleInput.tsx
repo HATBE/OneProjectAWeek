@@ -81,6 +81,31 @@ export default function ConsoleInput() {
     setCommandHistory((prevCommands) => [...prevCommands, command]);
   };
 
+  const arrowUpPressed = (): void => {
+    setCurrentHistoryIndex((prevIndex) => {
+      if (prevIndex < commandHistory.length - 1) {
+        const newIndex = prevIndex + 1;
+        setCurrentConsoleText(commandHistory[newIndex]);
+        return newIndex;
+      }
+      return prevIndex;
+    });
+  };
+
+  const arrowDownPressed = (): void => {
+    setCurrentHistoryIndex((prevIndex) => {
+      if (prevIndex > 0) {
+        const newIndex = prevIndex - 1;
+        setCurrentConsoleText(commandHistory[newIndex]);
+        return newIndex;
+      } else if (prevIndex === 0) {
+        setCurrentConsoleText("");
+        return -1;
+      }
+      return prevIndex;
+    });
+  };
+
   const enterIsPressed = (): void => {
     const text = currentConsoleText.trim();
 
@@ -88,6 +113,7 @@ export default function ConsoleInput() {
       return;
     }
 
+    setCurrentHistoryIndex(-1);
     addCommandToHistory(text);
     CommandsHandler.getInstance().handleCommand(text);
     setCurrentConsoleText("");
@@ -144,6 +170,10 @@ export default function ConsoleInput() {
         return moveCursorLeft();
       case "ArrowRight":
         return moveCursorRight();
+      case "ArrowUp":
+        return arrowUpPressed();
+      case "ArrowDown":
+        return arrowDownPressed();
     }
 
     if (keysAllowed.test(keyPressed)) {
@@ -161,8 +191,3 @@ export default function ConsoleInput() {
 
   return <div className="console-input">{renderConsoleInput()}</div>;
 }
-
-/**
- * TODO:
- * - arrowup / awwowdown, handle history
- */
