@@ -83,10 +83,14 @@ export default function ConsoleInput() {
 
   const arrowUpPressed = (): void => {
     setCurrentHistoryIndex((prevIndex) => {
-      if (prevIndex < commandHistory.length - 1) {
-        const newIndex = prevIndex + 1;
+      if (prevIndex > 0) {
+        const newIndex = prevIndex - 1;
         setCurrentConsoleText(commandHistory[newIndex]);
         return newIndex;
+      } else if (prevIndex === -1 && commandHistory.length > 0) {
+        const lastIndex = commandHistory.length - 1;
+        setCurrentConsoleText(commandHistory[lastIndex]);
+        return lastIndex;
       }
       return prevIndex;
     });
@@ -94,11 +98,11 @@ export default function ConsoleInput() {
 
   const arrowDownPressed = (): void => {
     setCurrentHistoryIndex((prevIndex) => {
-      if (prevIndex > 0) {
-        const newIndex = prevIndex - 1;
+      if (prevIndex < commandHistory.length - 1 && prevIndex !== -1) {
+        const newIndex = prevIndex + 1;
         setCurrentConsoleText(commandHistory[newIndex]);
         return newIndex;
-      } else if (prevIndex === 0) {
+      } else if (prevIndex === commandHistory.length - 1) {
         setCurrentConsoleText("");
         return -1;
       }
