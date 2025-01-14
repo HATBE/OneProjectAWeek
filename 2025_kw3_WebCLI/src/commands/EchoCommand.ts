@@ -1,17 +1,19 @@
-import ConsoleDataStorage from "../ConsoleDataStorage";
+import ConsoleDataStorage from "../ConsoleOutputStorage";
 import Command from "./Command";
 
 export default class EchoCommand extends Command {
   protected name = "echo";
+  protected description = "Echos the entered text";
+  protected usage = "echo [text]";
 
-  public handle() {
-    if (this.args.length <= 0) {
+  public handle(args: string[]) {
+    if (args.length <= 0) {
       return ConsoleDataStorage.getInstance().addLine(
         "WRONG USAGE OF THIS COMMAND"
       );
     }
 
-    const echoText = this.args.join(" ");
+    const echoText = args.join(" ");
 
     ConsoleDataStorage.getInstance().addLine(echoText);
   }

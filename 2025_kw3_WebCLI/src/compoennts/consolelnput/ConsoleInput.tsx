@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./ConsoleInput.css";
-import ConsoleDataStorage from "../../ConsoleDataStorage";
+import ConsoleDataStorage from "../../ConsoleOutputStorage";
 
 type ConsoleInputProps = {
   outputText: (text: string) => void;
@@ -9,6 +9,7 @@ type ConsoleInputProps = {
 export default function ConsoleInput({ outputText }: ConsoleInputProps) {
   const [currentConsoleText, setCurrentConsoleText] = useState<string>("");
   const [cursorPosition, setCursorPosition] = useState<number>(0);
+  const [commandHistory, setCommandHistory] = useState<string[]>([]);
 
   const keysAllowed = new RegExp("^[A-Za-z0-9äöü ]$");
 
@@ -78,12 +79,18 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
     }
   };
 
+  const addCommandToHistory = (command: string) => {
+    setCommandHistory((prevCommands) => [...prevCommands, command]);
+  };
+
   const enterIsPressed = (): void => {
     const text = currentConsoleText.trim();
 
     if (!text) {
       return;
     }
+
+    addCommandToHistory(text);
     outputText(text);
     setCurrentConsoleText("");
     setCursorPosition(0);
@@ -117,14 +124,15 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
       return;
     }
 
-    if (event.ctrlKey && event.key === "v") {
-      ctrlVIsPressed();
-      return;
-    }
-
-    if (event.ctrlKey && event.key === "l") {
-      ctrlLIsPressed();
-      return;
+    if (event.ctrlKey) {
+      switch (keyPressed.toLocaleLowerCase()) {
+        case "v":
+          ctrlVIsPressed();
+          return;
+        case "l":
+          ctrlLIsPressed();
+          return;
+      }
     }
 
     switch (keyPressed) {
@@ -155,3 +163,8 @@ export default function ConsoleInput({ outputText }: ConsoleInputProps) {
 
   return <div className="console-input">{renderConsoleInput()}</div>;
 }
+
+/**
+ * TODO:
+ * - arrowup / awwowdown, handle history
+ */

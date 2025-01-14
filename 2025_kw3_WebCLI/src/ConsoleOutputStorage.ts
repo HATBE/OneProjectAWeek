@@ -18,6 +18,14 @@ export default class ConsoleDataStorage {
     this.notifyListeners();
   }
 
+  public addEmptyLine(): void {
+    this.addLine("\u00A0");
+  }
+
+  public addSeperator(): void {
+    this.addLine("---------------");
+  }
+
   public clear(): void {
     this.lines = [];
     this.notifyListeners();

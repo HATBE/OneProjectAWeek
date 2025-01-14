@@ -1,15 +1,27 @@
-import ConsoleDataStorage from "../ConsoleDataStorage";
+import ConsoleDataStorage from "../ConsoleOutputStorage";
 import Command from "./Command";
+import CommandsHandler from "./CommandsHandler";
 
 export default class HelpCommand extends Command {
   protected name = "help";
+  protected description = "Prints the help page";
+  protected usage = "help [command]";
 
-  public handle() {
-    ConsoleDataStorage.getInstance().addLine("a");
-    ConsoleDataStorage.getInstance().addLine("b");
-    ConsoleDataStorage.getInstance().addLine("c");
-    ConsoleDataStorage.getInstance().addLine(
-      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-    );
+  public handle(args: string[]) {
+    const commands = CommandsHandler.getInstance().getCommands();
+
+    ConsoleDataStorage.getInstance().addLine("HELP");
+    ConsoleDataStorage.getInstance().addSeperator();
+    ConsoleDataStorage.getInstance().addEmptyLine();
+
+    commands.forEach((cmd) => {
+      ConsoleDataStorage.getInstance().addLine(`${cmd.command.getName()}:`);
+      ConsoleDataStorage.getInstance().addLine(
+        `\u00A0\u00A0\u00A0usage: ${cmd.command.getUsage()}`
+      );
+      ConsoleDataStorage.getInstance().addLine(
+        `\u00A0\u00A0\u00A0description: ${cmd.command.getDescription()}`
+      );
+    });
   }
 }
