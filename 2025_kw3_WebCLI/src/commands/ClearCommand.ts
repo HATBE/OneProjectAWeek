@@ -3,10 +3,10 @@ import Command from "./Command";
 
 export default class ClearCommand extends Command {
   protected name = "clear";
-  protected description = "clears the console";
+  protected description = "Clears the console";
   protected usage = "clear";
 
-  public handle() {
+  protected handle() {
     ConsoleOutputStorage.getInstance().clear();
   }
 }

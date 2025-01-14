@@ -7,7 +7,7 @@ export default class HelpCommand extends Command {
   protected description = "Prints the help page";
   protected usage = "help [command]";
 
-  public handle(args: string[]) {
+  protected handle(args: string[]) {
     const commands = CommandsHandler.getInstance().getCommands();
 
     const lines: string[] = [];

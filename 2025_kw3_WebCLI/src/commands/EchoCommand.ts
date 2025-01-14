@@ -6,7 +6,7 @@ export default class EchoCommand extends Command {
   protected description = "Echos the entered text";
   protected usage = "echo [text]";
 
-  public handle(args: string[]) {
+  protected handle(args: string[]) {
     if (args.length <= 0) {
       return ConsoleOutputStorage.getInstance().addLine(
         `WRONG USAGE: ${this.getUsage()}`
