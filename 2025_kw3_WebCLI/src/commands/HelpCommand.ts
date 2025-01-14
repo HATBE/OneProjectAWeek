@@ -12,11 +12,8 @@ export default class HelpCommand extends AbstractCommand {
 
     const lines: string[] = [];
 
-    lines.push("HELP");
-
-    lines.push(ConsoleOutputStorage.getInstance().getSeperator());
+    lines.push("Commands:");
     lines.push(ConsoleOutputStorage.getInstance().getEmptyLine());
-
     commands.forEach((cmd) => {
       lines.push(`${cmd.command.getName()}:`);
       lines.push(`\u00A0\u00A0\u00A0usage: ${cmd.command.getUsage()}`);
