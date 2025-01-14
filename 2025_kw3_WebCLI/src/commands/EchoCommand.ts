@@ -1,10 +1,12 @@
 import ConsoleOutputStorage from "../ConsoleOutputStorage";
-import Command from "./Command";
+import AbstractCommand from "./AbstractCommand";
 
-export default class EchoCommand extends Command {
+export default class EchoCommand extends AbstractCommand {
   protected name = "echo";
   protected description = "Echos the entered text";
   protected usage = "echo [text]";
+
+  protected showCommand: boolean = false;
 
   protected handle(args: string[]) {
     if (args.length <= 0) {

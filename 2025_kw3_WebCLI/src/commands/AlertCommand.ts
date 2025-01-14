@@ -1,7 +1,7 @@
 import ConsoleOutputStorage from "../ConsoleOutputStorage";
-import Command from "./Command";
+import AbstractCommand from "./AbstractCommand";
 
-export default class AlertCommand extends Command {
+export default class AlertCommand extends AbstractCommand {
   protected name = "alert";
   protected description = "Makes an js alert with the text";
   protected usage = "alert [message]";

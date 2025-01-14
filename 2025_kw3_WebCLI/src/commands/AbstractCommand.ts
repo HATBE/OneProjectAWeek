@@ -1,14 +1,13 @@
-import ConsoleOutputStorage from "../ConsoleOutputStorage";
-
-export default abstract class Command {
+export default abstract class AbstractCommand {
   protected abstract name: string;
   protected abstract description: string;
   protected abstract usage: string;
 
+  protected showCommand: boolean = true;
+
   protected abstract handle(args: string[]): void;
 
   public execute(cmd: string, args: string[]): void {
-    ConsoleOutputStorage.getInstance().addLine(`> ${cmd} ${args.join(" ")}`);
     this.handle(args);
   }
 
@@ -26,5 +25,9 @@ export default abstract class Command {
 
   public getDescription() {
     return this.description;
+  }
+
+  public doShowCommand(): boolean {
+    return this.showCommand;
   }
 }

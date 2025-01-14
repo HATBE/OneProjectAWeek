@@ -1,8 +1,8 @@
 import ConsoleOutputStorage from "../ConsoleOutputStorage";
-import Command from "./Command";
+import AbstractCommand from "./AbstractCommand";
 import CommandsHandler from "./CommandsHandler";
 
-export default class HelpCommand extends Command {
+export default class HelpCommand extends AbstractCommand {
   protected name = "help";
   protected description = "Prints the help page";
   protected usage = "help [command]";

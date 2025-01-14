@@ -1,14 +1,14 @@
 import ConsoleOutputStorage from "../ConsoleOutputStorage";
 import AlertCommand from "./AlertCommand";
 import ClearCommand from "./ClearCommand";
-import Command from "./Command";
+import AbstractCommand from "./AbstractCommand";
 import EchoCommand from "./EchoCommand";
 import HelpCommand from "./HelpCommand";
 import JokeCommand from "./JokeCommand";
 
 type CommandArrayItem = {
   name: string;
-  command: Command;
+  command: AbstractCommand;
 };
 
 export default class CommandsHandler {
@@ -33,7 +33,7 @@ export default class CommandsHandler {
     this.registerCommand("joke", new JokeCommand());
   }
 
-  public registerCommand(name: string, comandClass: Command): void {
+  public registerCommand(name: string, comandClass: AbstractCommand): void {
     this.commands.push({ name, command: comandClass });
   }
 
@@ -66,11 +66,17 @@ export default class CommandsHandler {
       return;
     }
 
+    if (cmd.command.doShowCommand()) {
+      ConsoleOutputStorage.getInstance().addLine(
+        `> ${command} ${args.join(" ")}`
+      );
+    }
+
     cmd.command.execute(command, args);
   }
 }
 
 //**
 // * TODO:
-// * color command
+// * - minigames ?? (with session ingame or in app or something)
 // */

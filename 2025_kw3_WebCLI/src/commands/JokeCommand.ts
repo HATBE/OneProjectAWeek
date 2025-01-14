@@ -1,7 +1,7 @@
 import ConsoleOutputStorage from "../ConsoleOutputStorage";
-import Command from "./Command";
+import AbstractCommand from "./AbstractCommand";
 
-export default class JokeCommand extends Command {
+export default class JokeCommand extends AbstractCommand {
   protected name = "joke";
   protected description = "Prints a random joke";
   protected usage = "joke";
