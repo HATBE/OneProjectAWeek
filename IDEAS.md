@@ -3,3 +3,6 @@
 - web os
 - life chat
 - blockchain prototype
+- http server
+- mail server
+-

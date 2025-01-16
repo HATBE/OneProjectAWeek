@@ -6,6 +6,7 @@ import EchoCommand from "./EchoCommand";
 import HelpCommand from "./HelpCommand";
 import JokeCommand from "./JokeCommand";
 import OpenCommand from "./OpenCommand";
+import TimeCommand from "./TimeCommand";
 
 type CommandArrayItem = {
   name: string;
@@ -33,6 +34,7 @@ export default class CommandsHandler {
     this.registerCommand("alert", new AlertCommand());
     this.registerCommand("joke", new JokeCommand());
     this.registerCommand("open", new OpenCommand());
+    this.registerCommand("time", new TimeCommand());
   }
 
   public registerCommand(name: string, comandClass: AbstractCommand): void {

@@ -3,8 +3,8 @@ import AbstractCommand from "./AbstractCommand";
 
 export default class OpenCommand extends AbstractCommand {
   protected name = "open";
-  protected description = "open [url] <newTab(true|false)>";
-  protected usage = "open";
+  protected description = "Opens a url in the browser (new tab or new window)";
+  protected usage = "open [url] <newTab(true|false)>";
 
   protected handle(args: string[]) {
     if (args.length < 1 || args.length > 2) {
