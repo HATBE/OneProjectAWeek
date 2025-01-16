@@ -1,17 +1,8 @@
 type Listener = (data: string[]) => void;
 
 export default class ConsoleOutputStorage {
-  private static instance: ConsoleOutputStorage | null = null;
-
   private lines: string[] = [];
   private listeners: Set<Listener> = new Set();
-
-  public static getInstance(): ConsoleOutputStorage {
-    if (!ConsoleOutputStorage.instance) {
-      ConsoleOutputStorage.instance = new ConsoleOutputStorage();
-    }
-    return ConsoleOutputStorage.instance;
-  }
 
   public addLine(line: string): void {
     this.lines.push(line.replace(/ /g, "\u00A0"));

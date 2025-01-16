@@ -8,7 +8,7 @@ export default class OpenCommand extends AbstractCommand {
 
   protected handle(args: string[]) {
     if (args.length < 1 || args.length > 2) {
-      return ConsoleOutputStorage.getInstance().addLine(
+      return this.consoleOutputStorage.addLine(
         `WRONG USAGE: ${this.getUsage()}`
       );
     }
@@ -19,9 +19,7 @@ export default class OpenCommand extends AbstractCommand {
     if (
       !/(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\S*)?/g.test(domain)
     ) {
-      return ConsoleOutputStorage.getInstance().addLine(
-        `ERROR! URL MUST BE VALID!`
-      );
+      return this.consoleOutputStorage.addLine(`ERROR! URL MUST BE VALID!`);
     }
 
     if (!/^https?:\/\//i.test(domain)) {

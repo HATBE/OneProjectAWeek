@@ -1,4 +1,3 @@
-import ConsoleOutputStorage from "../ConsoleOutputStorage";
 import AbstractCommand from "./AbstractCommand";
 
 export default class TimeCommand extends AbstractCommand {
@@ -8,7 +7,7 @@ export default class TimeCommand extends AbstractCommand {
 
   protected handle() {
     const nowDate = new Date();
-    ConsoleOutputStorage.getInstance().addLine(
+    this.consoleOutputStorage.addLine(
       `It is ${nowDate.getDate()}.${
         nowDate.getMonth() + 1
       }.${nowDate.getFullYear()} ${nowDate.getHours()}:${nowDate.getMinutes()}:${nowDate.getSeconds()}.`

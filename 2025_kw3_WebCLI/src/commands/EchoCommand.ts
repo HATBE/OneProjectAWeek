@@ -1,4 +1,3 @@
-import ConsoleOutputStorage from "../ConsoleOutputStorage";
 import AbstractCommand from "./AbstractCommand";
 
 export default class EchoCommand extends AbstractCommand {
@@ -10,13 +9,13 @@ export default class EchoCommand extends AbstractCommand {
 
   protected handle(args: string[]) {
     if (args.length <= 0) {
-      return ConsoleOutputStorage.getInstance().addLine(
+      return this.consoleOutputStorage.addLine(
         `WRONG USAGE: ${this.getUsage()}`
       );
     }
 
     const echoText = args.join(" ");
 
-    ConsoleOutputStorage.getInstance().addLine(echoText);
+    this.consoleOutputStorage.addLine(echoText);
   }
 }

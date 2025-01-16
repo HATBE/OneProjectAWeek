@@ -3,7 +3,15 @@ import "./ConsoleInput.css";
 import ConsoleOutputStorage from "../../ConsoleOutputStorage";
 import CommandsHandler from "../../commands/CommandsHandler";
 
-export default function ConsoleInput() {
+type ConsoleInputProps = {
+  consoleOutputStorage: ConsoleOutputStorage;
+  commandsHandler: CommandsHandler;
+};
+
+export default function ConsoleInput({
+  consoleOutputStorage,
+  commandsHandler,
+}: ConsoleInputProps) {
   const [currentConsoleText, setCurrentConsoleText] = useState<string>("");
   const [cursorPosition, setCursorPosition] = useState<number>(0);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
@@ -15,7 +23,7 @@ export default function ConsoleInput() {
   };
 
   const ctrlLIsPressed = async (): Promise<void> => {
-    ConsoleOutputStorage.getInstance().clear();
+    consoleOutputStorage.clear();
   };
 
   const backSpaceIsPressed = (): void => {
@@ -121,7 +129,7 @@ export default function ConsoleInput() {
 
     setCurrentHistoryIndex(-1);
     addCommandToHistory(text);
-    CommandsHandler.getInstance().handleCommand(text);
+    commandsHandler.handleCommand(text);
     setCurrentConsoleText("");
     setCursorPosition(0);
   };

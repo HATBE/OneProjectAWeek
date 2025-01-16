@@ -1,4 +1,3 @@
-import ConsoleOutputStorage from "../ConsoleOutputStorage";
 import AbstractCommand from "./AbstractCommand";
 
 export default class AlertCommand extends AbstractCommand {
@@ -8,7 +7,7 @@ export default class AlertCommand extends AbstractCommand {
 
   protected handle(args: string[]) {
     if (args.length <= 0) {
-      return ConsoleOutputStorage.getInstance().addLine(
+      return this.consoleOutputStorage.addLine(
         `WRONG USAGE: ${this.getUsage()}`
       );
     }

@@ -1,4 +1,3 @@
-import ConsoleOutputStorage from "../ConsoleOutputStorage";
 import AbstractCommand from "./AbstractCommand";
 
 export default class ClearCommand extends AbstractCommand {
@@ -9,6 +8,6 @@ export default class ClearCommand extends AbstractCommand {
   protected showCommand: boolean = false;
 
   protected handle() {
-    ConsoleOutputStorage.getInstance().clear();
+    this.consoleOutputStorage.clear();
   }
 }

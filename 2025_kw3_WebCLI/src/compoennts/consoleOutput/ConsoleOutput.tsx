@@ -2,16 +2,20 @@ import { useEffect, useRef, useState } from "react";
 import "./consoleOutput.css";
 import ConsoleOutputStorage from "../../ConsoleOutputStorage";
 
-export default function ConsoleOutput() {
+type ConsoleOutputProps = {
+  consoleOutputStorage: ConsoleOutputStorage;
+};
+
+export default function ConsoleOutput({
+  consoleOutputStorage,
+}: ConsoleOutputProps) {
   const [consoleText, setConsoleText] = useState<string[]>(
-    ConsoleOutputStorage.getInstance().getLines()
+    consoleOutputStorage.getLines()
   );
 
   const consoleOutputRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const storage = ConsoleOutputStorage.getInstance();
-
     const updateConsoleText = (lines: string[]) => {
       setConsoleText([...lines]);
 
@@ -23,10 +27,10 @@ export default function ConsoleOutput() {
       }, 0);
     };
 
-    storage.subscribe(updateConsoleText);
+    consoleOutputStorage.subscribe(updateConsoleText);
 
     return () => {
-      storage.unsubscribe(updateConsoleText);
+      consoleOutputStorage.unsubscribe(updateConsoleText);
     };
   }, []);
 

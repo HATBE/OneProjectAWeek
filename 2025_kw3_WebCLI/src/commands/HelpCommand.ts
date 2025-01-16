@@ -1,6 +1,4 @@
-import ConsoleOutputStorage from "../ConsoleOutputStorage";
 import AbstractCommand from "./AbstractCommand";
-import CommandsHandler from "./CommandsHandler";
 
 export default class HelpCommand extends AbstractCommand {
   protected name = "help";
@@ -8,12 +6,12 @@ export default class HelpCommand extends AbstractCommand {
   protected usage = "help [command]";
 
   protected handle(args: string[]) {
-    const commands = CommandsHandler.getInstance().getCommands();
+    const commands = this.commandsHandler.getCommands();
 
     const lines: string[] = [];
 
     lines.push("Commands:");
-    lines.push(ConsoleOutputStorage.getInstance().getEmptyLine());
+    lines.push(this.consoleOutputStorage.getEmptyLine());
     commands.forEach((cmd) => {
       lines.push(`${cmd.command.getName()}:`);
       lines.push(`\u00A0\u00A0\u00A0usage: ${cmd.command.getUsage()}`);
@@ -22,6 +20,6 @@ export default class HelpCommand extends AbstractCommand {
       );
     });
 
-    ConsoleOutputStorage.getInstance().addLines(lines);
+    this.consoleOutputStorage.addLines(lines);
   }
 }

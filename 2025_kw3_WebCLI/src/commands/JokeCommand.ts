@@ -1,4 +1,3 @@
-import ConsoleOutputStorage from "../ConsoleOutputStorage";
 import AbstractCommand from "./AbstractCommand";
 
 export default class JokeCommand extends AbstractCommand {
@@ -8,7 +7,7 @@ export default class JokeCommand extends AbstractCommand {
 
   protected async handle(args: string[]) {
     const joke = await this.getJoke();
-    ConsoleOutputStorage.getInstance().addLine(joke);
+    this.consoleOutputStorage.addLine(joke);
   }
 
   private async getJoke(): Promise<string> {
