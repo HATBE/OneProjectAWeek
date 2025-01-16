@@ -7,7 +7,7 @@ export default class JokeCommand extends AbstractCommand {
 
   protected async handle(args: string[]) {
     const joke = await this.getJoke();
-    this.consoleOutputStorage.addLine(joke);
+    this.consoleOutputManager.addLine(joke);
   }
 
   private async getJoke(): Promise<string> {

@@ -7,7 +7,7 @@ export default class TimeCommand extends AbstractCommand {
 
   protected handle() {
     const nowDate = new Date();
-    this.consoleOutputStorage.addLine(
+    this.consoleOutputManager.addLine(
       `It is ${nowDate.getDate()}.${
         nowDate.getMonth() + 1
       }.${nowDate.getFullYear()} ${nowDate.getHours()}:${nowDate.getMinutes()}:${nowDate.getSeconds()}.`

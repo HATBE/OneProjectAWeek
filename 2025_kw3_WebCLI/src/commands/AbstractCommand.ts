@@ -1,4 +1,4 @@
-import ConsoleOutputStorage from "../ConsoleOutputStorage";
+import ConsoleOutputManager from "../ConsoleOutputManager";
 import CommandsHandler from "./CommandsHandler";
 
 export default abstract class AbstractCommand {
@@ -8,14 +8,14 @@ export default abstract class AbstractCommand {
 
   protected showCommand: boolean = true;
 
-  protected consoleOutputStorage: ConsoleOutputStorage;
+  protected consoleOutputManager: ConsoleOutputManager;
   protected commandsHandler: CommandsHandler;
 
   public constructor(
-    consoleOutputStorage: ConsoleOutputStorage,
+    consoleOutputManager: ConsoleOutputManager,
     commandsHandler: CommandsHandler
   ) {
-    this.consoleOutputStorage = consoleOutputStorage;
+    this.consoleOutputManager = consoleOutputManager;
     this.commandsHandler = commandsHandler;
   }
 

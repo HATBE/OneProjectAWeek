@@ -9,13 +9,13 @@ export default class EchoCommand extends AbstractCommand {
 
   protected handle(args: string[]) {
     if (args.length <= 0) {
-      return this.consoleOutputStorage.addLine(
+      return this.consoleOutputManager.addLine(
         `WRONG USAGE: ${this.getUsage()}`
       );
     }
 
     const echoText = args.join(" ");
 
-    this.consoleOutputStorage.addLine(echoText);
+    this.consoleOutputManager.addLine(echoText);
   }
 }

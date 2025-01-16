@@ -1,4 +1,4 @@
-import ConsoleOutputStorage from "../ConsoleOutputStorage";
+import ConsoleOutputManager from "../ConsoleOutputManager";
 import AlertCommand from "./AlertCommand";
 import ClearCommand from "./ClearCommand";
 import AbstractCommand from "./AbstractCommand";
@@ -14,42 +14,42 @@ type CommandArrayItem = {
 };
 
 export default class CommandsHandler {
-  private consoleOutputStorage: ConsoleOutputStorage;
+  private consoleOutputManager: ConsoleOutputManager;
   private commands: CommandArrayItem[] = [];
 
-  public constructor(consoleOutputStorage: ConsoleOutputStorage) {
-    this.consoleOutputStorage = consoleOutputStorage;
+  public constructor(consoleOutputManager: ConsoleOutputManager) {
+    this.consoleOutputManager = consoleOutputManager;
     this.registerCommands();
   }
 
   public registerCommands() {
     this.registerCommand(
       "help",
-      new HelpCommand(this.consoleOutputStorage, this)
+      new HelpCommand(this.consoleOutputManager, this)
     );
     this.registerCommand(
       "clear",
-      new ClearCommand(this.consoleOutputStorage, this)
+      new ClearCommand(this.consoleOutputManager, this)
     );
     this.registerCommand(
       "echo",
-      new EchoCommand(this.consoleOutputStorage, this)
+      new EchoCommand(this.consoleOutputManager, this)
     );
     this.registerCommand(
       "alert",
-      new AlertCommand(this.consoleOutputStorage, this)
+      new AlertCommand(this.consoleOutputManager, this)
     );
     this.registerCommand(
       "joke",
-      new JokeCommand(this.consoleOutputStorage, this)
+      new JokeCommand(this.consoleOutputManager, this)
     );
     this.registerCommand(
       "open",
-      new OpenCommand(this.consoleOutputStorage, this)
+      new OpenCommand(this.consoleOutputManager, this)
     );
     this.registerCommand(
       "time",
-      new TimeCommand(this.consoleOutputStorage, this)
+      new TimeCommand(this.consoleOutputManager, this)
     );
   }
 
@@ -80,14 +80,15 @@ export default class CommandsHandler {
     const cmd = this.commands.find((cmd) => cmd.name === command);
 
     if (!cmd) {
-      this.consoleOutputStorage.addLine(
+      this.consoleOutputManager.addLine(`> ${command} ${args.join(" ")}`);
+      this.consoleOutputManager.addLine(
         `Sorry! Command "${command}" not known!`
       );
       return;
     }
 
     if (cmd.command.doShowCommand()) {
-      this.consoleOutputStorage.addLine(`> ${command} ${args.join(" ")}`);
+      this.consoleOutputManager.addLine(`> ${command} ${args.join(" ")}`);
     }
 
     cmd.command.execute(command, args);

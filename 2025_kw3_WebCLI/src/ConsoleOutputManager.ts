@@ -1,6 +1,6 @@
 type Listener = (data: string[]) => void;
 
-export default class ConsoleOutputStorage {
+export default class ConsoleOutputManager {
   private lines: string[] = [];
   private listeners: Set<Listener> = new Set();
 

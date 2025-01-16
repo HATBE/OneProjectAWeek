@@ -8,6 +8,6 @@ export default class ClearCommand extends AbstractCommand {
   protected showCommand: boolean = false;
 
   protected handle() {
-    this.consoleOutputStorage.clear();
+    this.consoleOutputManager.clear();
   }
 }

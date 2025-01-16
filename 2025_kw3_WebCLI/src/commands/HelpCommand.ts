@@ -11,7 +11,7 @@ export default class HelpCommand extends AbstractCommand {
     const lines: string[] = [];
 
     lines.push("Commands:");
-    lines.push(this.consoleOutputStorage.getEmptyLine());
+    lines.push(this.consoleOutputManager.getEmptyLine());
     commands.forEach((cmd) => {
       lines.push(`${cmd.command.getName()}:`);
       lines.push(`\u00A0\u00A0\u00A0usage: ${cmd.command.getUsage()}`);
@@ -20,6 +20,6 @@ export default class HelpCommand extends AbstractCommand {
       );
     });
 
-    this.consoleOutputStorage.addLines(lines);
+    this.consoleOutputManager.addLines(lines);
   }
 }

@@ -7,7 +7,7 @@ export default class AlertCommand extends AbstractCommand {
 
   protected handle(args: string[]) {
     if (args.length <= 0) {
-      return this.consoleOutputStorage.addLine(
+      return this.consoleOutputManager.addLine(
         `WRONG USAGE: ${this.getUsage()}`
       );
     }

@@ -3,22 +3,22 @@ import ConsoleInput from "../consolelnput/ConsoleInput";
 import ConsoleOutput from "../consoleOutput/ConsoleOutput";
 import { useEffect } from "react";
 import CommandsHandler from "../../commands/CommandsHandler";
-import ConsoleOutputStorage from "../../ConsoleOutputStorage";
+import ConsoleOutputManager from "../../ConsoleOutputManager";
 
 export default function WebCli() {
-  const consoleOutputStorage = new ConsoleOutputStorage();
-  const commandsHandler = new CommandsHandler(consoleOutputStorage);
+  const consoleOutputManager = new ConsoleOutputManager();
+  const commandsHandler = new CommandsHandler(consoleOutputManager);
 
   useEffect(() => {
-    consoleOutputStorage.printBanner();
+    consoleOutputManager.printBanner();
   });
 
   return (
     <div className="console">
-      <ConsoleOutput consoleOutputStorage={consoleOutputStorage} />
+      <ConsoleOutput consoleOutputManager={consoleOutputManager} />
       <ConsoleInput
         commandsHandler={commandsHandler}
-        consoleOutputStorage={consoleOutputStorage}
+        consoleOutputManager={consoleOutputManager}
       />
     </div>
   );
