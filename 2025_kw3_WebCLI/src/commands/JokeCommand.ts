@@ -18,6 +18,7 @@ export default class JokeCommand extends AbstractCommand {
           Accept: "application/json",
         },
       });
+
       if (!response.ok) {
         throw new Error("Failed to fetch joke");
       }
@@ -27,7 +28,7 @@ export default class JokeCommand extends AbstractCommand {
       return ((await response.json()) as { joke: string }).joke;
     } catch (error) {
       console.error(error);
-      return "UNKNOWN ERROR!";
+      return (error as { message: string }).message;
     }
   }
 }

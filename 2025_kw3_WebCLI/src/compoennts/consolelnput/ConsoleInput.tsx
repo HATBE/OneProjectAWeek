@@ -9,8 +9,6 @@ export default function ConsoleInput() {
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [currentHistroyIndex, setCurrentHistoryIndex] = useState<number>(-1);
 
-  const keysAllowed = new RegExp("^[A-Za-z0-9äöü ]$");
-
   const ctrlVIsPressed = async (): Promise<void> => {
     const clipboardText = await navigator.clipboard.readText();
     addTextToCursorPosition(clipboardText);
@@ -86,10 +84,12 @@ export default function ConsoleInput() {
       if (prevIndex > 0) {
         const newIndex = prevIndex - 1;
         setCurrentConsoleText(commandHistory[newIndex]);
+        setCursorPosition(commandHistory[newIndex].length);
         return newIndex;
       } else if (prevIndex === -1 && commandHistory.length > 0) {
         const lastIndex = commandHistory.length - 1;
         setCurrentConsoleText(commandHistory[lastIndex]);
+        setCursorPosition(commandHistory[lastIndex].length);
         return lastIndex;
       }
       return prevIndex;
@@ -101,9 +101,11 @@ export default function ConsoleInput() {
       if (prevIndex < commandHistory.length - 1 && prevIndex !== -1) {
         const newIndex = prevIndex + 1;
         setCurrentConsoleText(commandHistory[newIndex]);
+        setCursorPosition(commandHistory[newIndex].length);
         return newIndex;
       } else if (prevIndex === commandHistory.length - 1) {
         setCurrentConsoleText("");
+        setCursorPosition(0);
         return -1;
       }
       return prevIndex;
@@ -180,7 +182,7 @@ export default function ConsoleInput() {
         return arrowDownPressed();
     }
 
-    if (keysAllowed.test(keyPressed)) {
+    if (keyPressed.length === 1) {
       addTextToCursorPosition(keyPressed);
     }
   };
