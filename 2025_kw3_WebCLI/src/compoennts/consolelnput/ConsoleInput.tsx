@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
-import "./ConsoleInput.css";
-import ConsoleOutputManager from "../../ConsoleOutputManager";
-import CommandsHandler from "../../commands/CommandsHandler";
+import "./consoleInput.css";
+import Console from "../../Console";
 
 type ConsoleInputProps = {
-  consoleOutputManager: ConsoleOutputManager;
-  commandsHandler: CommandsHandler;
+  console: Console;
 };
 
 export default function ConsoleInput({
-  consoleOutputManager,
-  commandsHandler,
+  console,
 }: ConsoleInputProps) {
   const [currentConsoleText, setCurrentConsoleText] = useState<string>("");
   const [cursorPosition, setCursorPosition] = useState<number>(0);
@@ -23,7 +20,7 @@ export default function ConsoleInput({
   };
 
   const ctrlLIsPressed = async (): Promise<void> => {
-    consoleOutputManager.clear();
+    console.getConsoleOutputManager().clear();
   };
 
   const backSpaceIsPressed = (): void => {
@@ -129,7 +126,7 @@ export default function ConsoleInput({
 
     setCurrentHistoryIndex(-1);
     addCommandToHistory(text);
-    commandsHandler.handleCommand(text);
+    console.handleInput(text);
     setCurrentConsoleText("");
     setCursorPosition(0);
   };

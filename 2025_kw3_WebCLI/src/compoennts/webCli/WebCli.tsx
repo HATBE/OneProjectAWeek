@@ -4,10 +4,12 @@ import ConsoleOutput from "../consoleOutput/ConsoleOutput";
 import { useEffect } from "react";
 import CommandsHandler from "../../commands/CommandsHandler";
 import ConsoleOutputManager from "../../ConsoleOutputManager";
+import Console from "../../Console";
 
 export default function WebCli() {
   const consoleOutputManager = new ConsoleOutputManager();
   const commandsHandler = new CommandsHandler(consoleOutputManager);
+  const console = new Console(consoleOutputManager, commandsHandler)
 
   useEffect(() => {
     consoleOutputManager.printBanner();
@@ -15,10 +17,9 @@ export default function WebCli() {
 
   return (
     <div className="console">
-      <ConsoleOutput consoleOutputManager={consoleOutputManager} />
+      <ConsoleOutput console={console} />
       <ConsoleInput
-        commandsHandler={commandsHandler}
-        consoleOutputManager={consoleOutputManager}
+        console={console}
       />
     </div>
   );

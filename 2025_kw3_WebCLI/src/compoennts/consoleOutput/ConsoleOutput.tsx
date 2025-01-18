@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import "./consoleOutput.css";
-import ConsoleOutputManager from "../../ConsoleOutputManager";
+import Console from "../../Console";
 
 type ConsoleOutputProps = {
-  consoleOutputManager: ConsoleOutputManager;
+  console: Console;
 };
 
 export default function ConsoleOutput({
-  consoleOutputManager,
+  console,
 }: ConsoleOutputProps) {
   const [consoleText, setConsoleText] = useState<string[]>(
-    consoleOutputManager.getLines()
+    console.getConsoleOutputManager().getLines()
   );
 
   const consoleOutputRef = useRef<HTMLDivElement | null>(null);
@@ -27,10 +27,10 @@ export default function ConsoleOutput({
       }, 0);
     };
 
-    consoleOutputManager.subscribe(updateConsoleText);
+    console.getConsoleOutputManager().subscribe(updateConsoleText);
 
     return () => {
-      consoleOutputManager.unsubscribe(updateConsoleText);
+      console.getConsoleOutputManager().unsubscribe(updateConsoleText);
     };
   }, []);
 
