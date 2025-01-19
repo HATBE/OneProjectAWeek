@@ -1,15 +1,14 @@
 import CommandsHandler from "./commands/CommandsHandler";
-import SessionCommand from "./commands/SessionCommand";
 import ConsoleOutputManager from "./ConsoleOutputManager";
 
 export default class Console {
     private consoleOutputManager: ConsoleOutputManager;
     private commandsHandler: CommandsHandler;
-    private currentSession: SessionCommand | null = null;
     
-    public constructor(consoleOutputManager: ConsoleOutputManager, commandsHandler: CommandsHandler) {
-        this.commandsHandler = commandsHandler;
-        this.consoleOutputManager = consoleOutputManager;
+    public constructor() {
+        this.consoleOutputManager = new ConsoleOutputManager();
+        this.commandsHandler = new CommandsHandler(this);
+
     }
 
     public getCommandsHandler() {
@@ -17,15 +16,7 @@ export default class Console {
     }
 
     public handleInput(text: string) {
-        if(this.currentSession) {
-            this
-            return;
-        }
         this.commandsHandler.handleCommand(text)
-    }
-
-    public getCurrentSession() {
-        return this.currentSession;
     }
 
     public getConsoleOutputManager() {

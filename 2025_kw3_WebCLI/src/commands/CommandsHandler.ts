@@ -1,4 +1,3 @@
-import ConsoleOutputManager from "../ConsoleOutputManager";
 import AlertCommand from "./AlertCommand";
 import ClearCommand from "./ClearCommand";
 import AbstractCommand from "./AbstractCommand";
@@ -7,6 +6,7 @@ import HelpCommand from "./HelpCommand";
 import JokeCommand from "./JokeCommand";
 import OpenCommand from "./OpenCommand";
 import TimeCommand from "./TimeCommand";
+import Console from "../Console";
 
 type CommandArrayItem = {
   name: string;
@@ -14,42 +14,42 @@ type CommandArrayItem = {
 };
 
 export default class CommandsHandler {
-  private consoleOutputManager: ConsoleOutputManager;
+  private console: Console;
   private commands: CommandArrayItem[] = [];
 
-  public constructor(consoleOutputManager: ConsoleOutputManager) {
-    this.consoleOutputManager = consoleOutputManager;
+  public constructor(console: Console) {
+    this.console = console;
     this.registerCommands();
   }
 
   public registerCommands() {
     this.registerCommand(
       "help",
-      new HelpCommand(this.consoleOutputManager, this)
+      new HelpCommand(this.console.getConsoleOutputManager(), this)
     );
     this.registerCommand(
       "clear",
-      new ClearCommand(this.consoleOutputManager, this)
+      new ClearCommand(this.console.getConsoleOutputManager(), this)
     );
     this.registerCommand(
       "echo",
-      new EchoCommand(this.consoleOutputManager, this)
+      new EchoCommand(this.console.getConsoleOutputManager(), this)
     );
     this.registerCommand(
       "alert",
-      new AlertCommand(this.consoleOutputManager, this)
+      new AlertCommand(this.console.getConsoleOutputManager(), this)
     );
     this.registerCommand(
       "joke",
-      new JokeCommand(this.consoleOutputManager, this)
+      new JokeCommand(this.console.getConsoleOutputManager(), this)
     );
     this.registerCommand(
       "open",
-      new OpenCommand(this.consoleOutputManager, this)
+      new OpenCommand(this.console.getConsoleOutputManager(), this)
     );
     this.registerCommand(
       "time",
-      new TimeCommand(this.consoleOutputManager, this)
+      new TimeCommand(this.console.getConsoleOutputManager(), this)
     );
   }
 
@@ -80,22 +80,17 @@ export default class CommandsHandler {
     const cmd = this.commands.find((cmd) => cmd.name === command);
 
     if (!cmd) {
-      this.consoleOutputManager.addLine(`> ${command} ${args.join(" ")}`);
-      this.consoleOutputManager.addLine(
+      this.console.getConsoleOutputManager().addLine(`> ${command} ${args.join(" ")}`);
+      this.console.getConsoleOutputManager().addLine(
         `Sorry! Command "${command}" not known!`
       );
       return;
     }
 
     if (cmd.command.doShowCommand()) {
-      this.consoleOutputManager.addLine(`> ${command} ${args.join(" ")}`);
+      this.console.getConsoleOutputManager().addLine(`> ${command} ${args.join(" ")}`);
     }
 
     cmd.command.execute(command, args);
   }
 }
-
-//**
-// * TODO:
-// * - minigames ?? (with session ingame or in app or something)
-// */

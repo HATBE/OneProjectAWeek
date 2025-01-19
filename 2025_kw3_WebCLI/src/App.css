@@ -6,7 +6,7 @@ body {
   margin: 0;
   padding: 0;
 
-  font-family: Roboto;
+  font-family: monospace;
   user-select: none !important;
   overflow: hidden;
 }
