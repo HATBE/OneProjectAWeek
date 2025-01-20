@@ -1,50 +1,70 @@
-# React + TypeScript + Vite
+# Web Cli
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A CLI for the webbrowser.\
+You can add Commands which you can execute.\
+You can use text outputs and the js browser APIs.
 
-Currently, two official plugins are available:
+There are a bunch of commands implemented to show the capabilities. (look at the Functionality section)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![](.img/help.png)
 
-## Expanding the ESLint configuration
+## built with
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- React
 
-- Configure the top-level `parserOptions` property like this:
+## Functionality
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### CLI
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+![](.img/init.png)
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### help
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+The help command reads all registred commands and displays the name, description and usage privided by each registred command.
+
+![](.img/help.png)
+
+### echo
+
+The echo command echoes the arguments to the console.
+
+![](.img/echo.png)
+
+### alert
+
+The alert command alerts the arguments (browser api).
+
+![](.img/alert.png)
+
+### joke
+
+The joke command fetches (async) a random joke from https://icanhazdadjoke.com/ and displays it in the console
+
+![](.img/joke.png)
+
+### open
+
+The open command opens a url in a new tab or new window.
+
+![](.img/open.png)
+
+### time
+
+The time command displays the current time.
+
+![](.img/time.png)
+
+## Register commands
+
+1. create a command class extending AbstractCommand
+   - It needs the strings name, description and usage, optionaly the showCommand attribute.
+
+![](.img/commandExample.png)
+
+2. Register the command in the commandHandler.ts
+
+![](.img/registerCommand.png)
+
+## Video
+
+TODO:

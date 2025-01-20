@@ -1,8 +1,10 @@
 # TicTacToe
 
-## build with
+Just a default TicTacToe with realised with a web UI.
 
-- Plain old React
+## built with
+
+- React
 
 ## Screenshots
 
@@ -17,6 +19,8 @@
 ### DRAW
 
 ![](.img/draw.png)
+
+## Video
 
 Video: https://www.youtube.com/watch?v=JAPBo5zooXE
 
