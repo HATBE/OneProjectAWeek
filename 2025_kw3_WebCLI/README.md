@@ -63,7 +63,7 @@ The time command displays the current time.
 
 2. Register the command in the commandHandler.ts
 
-![](.img/registerCommand.png)
+![](.img/registercommand.png)
 
 ## Video
 
