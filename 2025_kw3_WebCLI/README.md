@@ -67,4 +67,6 @@ The time command displays the current time.
 
 ## Video
 
-TODO:
+https://www.youtube.com/watch?v=fV_canMYT3E
+
+[![Youtube video](https://img.youtube.com/vi/fV_canMYT3E/0.jpg)](https://www.youtube.com/watch?v=fV_canMYT3E)
