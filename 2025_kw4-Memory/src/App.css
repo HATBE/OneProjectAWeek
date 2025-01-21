@@ -23,3 +23,8 @@ body {
   user-select: none;
   cursor: pointer;
 }
+
+.thumpnail {
+  width: 100%;
+  object-fit: cover;
+}

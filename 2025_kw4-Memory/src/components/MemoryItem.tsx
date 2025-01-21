@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from "react";
+import { MouseEvent } from "react";
 import MemoryCard from "../MemoryCard";
 
 type MemoryItemProps = {
@@ -11,7 +11,9 @@ export default function MemoryItem({ card, clickHandler }: MemoryItemProps) {
 
   return (
     <div onClick={clickHandler} className="card" data-id={card.getId()}>
-      {!vis && <div>{card.getId()}</div>}
+      {!vis && (
+        <img className="thumpnail" src={`/assets/${card.getImagePath()}`} />
+      )}
       {vis && <div>VIS::::{card.getId()} </div>}
     </div>
   );
