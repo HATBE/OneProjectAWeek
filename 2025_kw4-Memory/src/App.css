@@ -1,0 +1,21 @@
+body {
+  background-color: #1c1c1c;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+}
+
+.grid {
+}
+
+.row {
+  display: flex;
+}
+
+.card {
+  margin: 10px;
+  width: 200px !important;
+  height: 200px !important;
+  background-color: red;
+}
