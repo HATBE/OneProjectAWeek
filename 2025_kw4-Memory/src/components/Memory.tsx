@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import MemoryItem from "./MemoryItem";
 
 type MemoryProps = {
@@ -19,20 +20,43 @@ export class MemoryCard {
 export default function Memory({ cardCount }: MemoryProps) {
   const col = Math.ceil(Math.sqrt(cardCount));
 
+  let lastClicked: number | null = null;
+
   const style = {
     gridTemplateColumns: `repeat(${col}, 1fr)`,
   };
 
-  const cards: MemoryCard[] = [];
+  let cards: MemoryCard[] = [];
 
-  for (let i = 0; i < cardCount; i++) {
-    cards.push(new MemoryCard(Math.ceil(Math.random() * 10) - 1));
+  const lcards: MemoryCard[] = [];
+  for (let i = 0; i < cardCount / 2; i++) {
+    const number = Math.floor(1000000000 + Math.random() * 9000000000);
+
+    lcards.push(new MemoryCard(number));
   }
+
+  cards = [...lcards, ...lcards];
+
+  const clickHandler = (e: MouseEvent) => {
+    const id = parseInt((e.currentTarget as HTMLElement).dataset.id ?? "");
+
+    if (lastClicked === id) {
+      lastClicked = null;
+      alert("match");
+      return;
+    }
+
+    lastClicked = id;
+  };
 
   return (
     <div className="grid" style={style}>
       {cards.map((card) => {
-        return <MemoryItem card={card} />;
+        return (
+          <div data-id={card.getId()} onClick={clickHandler}>
+            <MemoryItem card={card} />
+          </div>
+        );
       })}
     </div>
   );
