@@ -9,9 +9,17 @@ body {
 .grid {
   display: grid;
   gap: 10px;
+  width: 100%;
+  grid-auto-rows: 1fr;
+  position: relative;
 }
 
 .card {
-  aspect-ratio: 1;
+  position: relative;
+  aspect-ratio: 1 / 1;
   background-color: red;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+  cursor: pointer;
 }
