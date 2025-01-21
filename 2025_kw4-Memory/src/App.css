@@ -7,15 +7,11 @@ body {
 }
 
 .grid {
-}
-
-.row {
-  display: flex;
+  display: grid;
+  gap: 10px;
 }
 
 .card {
-  margin: 10px;
-  width: 200px !important;
-  height: 200px !important;
+  aspect-ratio: 1;
   background-color: red;
 }

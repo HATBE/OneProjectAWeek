@@ -4,31 +4,36 @@ type MemoryProps = {
   cardCount: number;
 };
 
+export class MemoryCard {
+  private id: number;
+
+  constructor(id: number) {
+    this.id = id;
+  }
+
+  public getId() {
+    return this.id;
+  }
+}
+
 export default function Memory({ cardCount }: MemoryProps) {
-  const row = Math.floor(Math.sqrt(cardCount));
   const col = Math.ceil(Math.sqrt(cardCount));
 
-  const renderGridItems = () => {
-    const grid = [];
-
-    for (let r = 0; r < row; r++) {
-      const columns = [];
-      for (let c = 0; c < col; c++) {
-        columns.push(
-          <div className="card">
-            <MemoryItem key={`col-${r}-${c}`} />
-          </div>
-        );
-      }
-      grid.push(
-        <div key={`row-${r}`} className="row">
-          {columns}
-        </div>
-      );
-    }
-
-    return grid;
+  const style = {
+    gridTemplateColumns: `repeat(${col}, 1fr)`,
   };
 
-  return <div className="grid">{renderGridItems()}</div>;
+  const cards: MemoryCard[] = [];
+
+  for (let i = 0; i < cardCount; i++) {
+    cards.push(new MemoryCard(Math.ceil(Math.random() * 10) - 1));
+  }
+
+  return (
+    <div className="grid" style={style}>
+      {cards.map((card) => {
+        return <MemoryItem card={card} />;
+      })}
+    </div>
+  );
 }
