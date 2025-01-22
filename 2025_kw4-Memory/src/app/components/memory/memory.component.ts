@@ -63,15 +63,20 @@ export class MemoryComponent {
   }
 
   protected clickHandler(card: MemoryCard) {
-    // match case
-    if (
-      this.lastClickedCard[this.lastClickedCard.length - 1] &&
-      this.lastClickedCard[this.lastClickedCard.length - 1].id === card.id
-    ) {
-      this.lastClickedCard = [];
-      alert('match');
+    if (this.lastClickedCard.length < 1) {
+      this.lastClickedCard.push(card);
       return;
     }
+
+    // match case
+    if (this.lastClickedCard[this.lastClickedCard.length - 1].id === card.id) {
+      this.lastClickedCard = [];
+      alert('match');
+      //TODO: remove cards from stack (empty them)
+      return;
+    }
+
+    // close cards
 
     this.lastClickedCard.push(card);
   }
