@@ -1,0 +1,4 @@
+<div class="card" (click)="onClick()">
+  <img *ngIf="visible" class="thumpnail" [src]="'/assets/' + card.image" />
+  <div *ngIf="!visible">{{ card.id }}</div>
+</div>

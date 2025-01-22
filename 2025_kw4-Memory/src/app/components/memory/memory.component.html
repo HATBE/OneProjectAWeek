@@ -1,0 +1,8 @@
+<div class="grid" [style]="gridStyle">
+  <app-memory-item
+    class="card"
+    *ngFor="let card of cards"
+    [card]="card"
+    (clickEvent)="clickHandler($event)"
+  />
+</div>
