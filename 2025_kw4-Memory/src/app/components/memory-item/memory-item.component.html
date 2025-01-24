@@ -1,4 +1,19 @@
-<div class="card" (click)="onClick()">
-  <img *ngIf="visible" class="thumpnail" [src]="'/assets/' + card.image" />
-  <div *ngIf="!visible">{{ card.id }}</div>
+<div
+  class="card"
+  (click)="onClick()"
+  [attr.data-index]="card.index"
+  [ngStyle]="found ? { borderColor: 'green', border: '10px solid green' } : {}"
+>
+  <img
+    [hidden]="!visible"
+    class="thumpnail"
+    [src]="'/assets/' + card.image"
+    draggable="false"
+  />
+  <img
+    [hidden]="visible"
+    class="thumpnail"
+    [src]="'/assets/qm.webp'"
+    draggable="false"
+  />
 </div>

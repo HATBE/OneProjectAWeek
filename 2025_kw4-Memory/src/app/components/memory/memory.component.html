@@ -1,8 +1,13 @@
-<div class="grid" [style]="gridStyle">
-  <app-memory-item
-    class="card"
-    *ngFor="let card of cards"
-    [card]="card"
-    (clickEvent)="clickHandler($event)"
-  />
+<div>
+  <div>Moves: {{ moves }}; Found Pairs = {{ foundCards.length / 2 }}</div>
+  <div class="grid" [style]="gridStyle">
+    <app-memory-item
+      class="card"
+      *ngFor="let card of cards"
+      [card]="card"
+      [activeCards]="activeCards"
+      (clickEvent)="clickHandler($event)"
+      [foundCards]="foundCards"
+    />
+  </div>
 </div>

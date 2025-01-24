@@ -29,11 +29,14 @@ export class MemoryComponent {
     '14.webp',
   ];
 
+  protected moves: number = 0;
+
   private cardsCount = 20;
   private col: number;
   protected gridStyle;
   protected cards: MemoryCard[] = [];
-  private lastClickedCard: MemoryCard[] = [];
+  protected activeCards: MemoryCard[] = [];
+  protected foundCards: MemoryCard[] = [];
 
   public constructor() {
     this.images = this.shuffleArray(this.images);
@@ -47,11 +50,17 @@ export class MemoryComponent {
     for (let i = 0; i < this.cardsCount / 2; i++) {
       const selectedImage = this.images[0];
       this.images.shift();
-      lcards.push({ id: uuid(), image: selectedImage });
+      const cardId = uuid();
+      lcards.push({ id: cardId, image: selectedImage });
+      lcards.push({ id: cardId, image: selectedImage });
     }
 
-    this.cards = [...lcards, ...lcards];
-    this.cards = this.shuffleArray(this.cards);
+    this.cards = this.shuffleArray(lcards);
+
+    this.cards = this.cards.map((card, idx) => ({
+      ...card,
+      index: idx,
+    }));
   }
 
   private shuffleArray<T>(array: T[]): T[] {
@@ -63,21 +72,26 @@ export class MemoryComponent {
   }
 
   protected clickHandler(card: MemoryCard) {
-    if (this.lastClickedCard.length < 1) {
-      this.lastClickedCard.push(card);
+    this.moves++;
+    if (this.activeCards.length < 1) {
+      this.activeCards.push(card);
+      return;
+    }
+
+    if (this.activeCards.length >= 2) {
+      this.activeCards = [];
+      this.activeCards.push(card);
       return;
     }
 
     // match case
-    if (this.lastClickedCard[this.lastClickedCard.length - 1].id === card.id) {
-      this.lastClickedCard = [];
-      alert('match');
-      //TODO: remove cards from stack (empty them)
+    if (this.activeCards[this.activeCards.length - 1].id === card.id) {
+      this.foundCards.push(this.activeCards[this.activeCards.length - 1]);
+      this.foundCards.push(card);
+      this.activeCards = [];
       return;
     }
 
-    // close cards
-
-    this.lastClickedCard.push(card);
+    this.activeCards.push(card);
   }
 }
