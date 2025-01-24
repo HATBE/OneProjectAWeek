@@ -72,6 +72,14 @@ export class MemoryComponent {
   }
 
   protected clickHandler(card: MemoryCard) {
+    this.manageCards(card);
+
+    if (this.foundCards.length === this.cardsCount) {
+      alert('Du hast gebonnen!');
+    }
+  }
+
+  protected manageCards(card: MemoryCard) {
     this.moves++;
     if (this.activeCards.length < 1) {
       this.activeCards.push(card);
