@@ -32,24 +32,50 @@ export class MemoryComponent {
   protected moves: number = 0;
 
   private cardsCount = 20;
-  private col: number;
-  protected gridStyle;
+  private col: number = 1;
+  protected gridStyle = {};
   protected cards: MemoryCard[] = [];
   protected activeCards: MemoryCard[] = [];
   protected foundCards: MemoryCard[] = [];
 
   public constructor() {
-    this.images = this.shuffleArray(this.images);
     this.col = Math.ceil(Math.sqrt(this.cardsCount));
 
     this.gridStyle = {
       gridTemplateColumns: `repeat(${this.col}, 1fr)`,
     };
 
+    this.reset();
+  }
+
+  private shuffleArray<T>(array: T[]): T[] {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  protected clickHandler(card: MemoryCard) {
+    this.manageCardsOnClick(card);
+
+    if (this.foundCards.length === this.cardsCount) {
+      alert('You won!');
+    }
+  }
+
+  protected reset() {
+    this.moves = 0;
+    this.activeCards = [];
+    this.foundCards = [];
+    this.cards = [];
+
+    const images = this.shuffleArray(this.images);
+
     const lcards: MemoryCard[] = [];
     for (let i = 0; i < this.cardsCount / 2; i++) {
-      const selectedImage = this.images[0];
-      this.images.shift();
+      const selectedImage = images[0];
+      images.shift();
       const cardId = uuid();
       lcards.push({ id: cardId, image: selectedImage });
       lcards.push({ id: cardId, image: selectedImage });
@@ -63,23 +89,7 @@ export class MemoryComponent {
     }));
   }
 
-  private shuffleArray<T>(array: T[]): T[] {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
-
-  protected clickHandler(card: MemoryCard) {
-    this.manageCards(card);
-
-    if (this.foundCards.length === this.cardsCount) {
-      alert('Du hast gebonnen!');
-    }
-  }
-
-  protected manageCards(card: MemoryCard) {
+  protected manageCardsOnClick(card: MemoryCard) {
     this.moves++;
     if (this.activeCards.length < 1) {
       this.activeCards.push(card);

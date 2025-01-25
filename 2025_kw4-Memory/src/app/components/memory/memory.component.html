@@ -1,5 +1,8 @@
 <div>
-  <div>Moves: {{ moves }}; Found Pairs = {{ foundCards.length / 2 }}</div>
+  <h1 style="display: flex; justify-content: space-between">
+    <span>Memory</span><button (click)="reset()">Reset</button>
+  </h1>
+  <h3>Moves: {{ moves }} - Found pairs = {{ foundCards.length / 2 }}</h3>
   <div class="grid" [style]="gridStyle">
     <app-memory-item
       class="card"

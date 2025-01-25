@@ -26,9 +26,27 @@ body {
   overflow: hidden;
   user-select: none;
   cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .thumpnail {
   width: 100%;
   object-fit: cover;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+button {
+  padding: 3px 10px;
+  border: none;
+  background-color: aliceblue;
+  border-radius: 5px;
+  cursor: pointer;
 }
