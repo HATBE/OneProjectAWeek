@@ -78,12 +78,13 @@ export class MemoryComponent {
   }
 
   private generateCards(): MemoryCard[] {
-    const images = this.shuffleArray(this.images);
+    const images = this.shuffleArray([...this.images]);
+
+    console.log(images);
 
     let cards: MemoryCard[] = [];
     for (let i = 0; i < this.cardsCount / 2; i++) {
-      const selectedImage = images[0];
-      images.shift();
+      const selectedImage = images[i];
       const cardId = uuid();
       cards.push({ id: cardId, image: selectedImage });
       cards.push({ id: cardId, image: selectedImage });
