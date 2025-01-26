@@ -80,8 +80,6 @@ export class MemoryComponent {
   private generateCards(): MemoryCard[] {
     const images = this.shuffleArray([...this.images]);
 
-    console.log(images);
-
     let cards: MemoryCard[] = [];
     for (let i = 0; i < this.cardsCount / 2; i++) {
       const selectedImage = images[i];
