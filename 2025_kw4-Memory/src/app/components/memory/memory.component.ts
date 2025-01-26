@@ -34,18 +34,22 @@ export class MemoryComponent {
   private cardsCount = 20;
   private col: number = 1;
   protected gridStyle = {};
+
   protected cards: MemoryCard[] = [];
   protected activeCards: MemoryCard[] = [];
   protected foundCards: MemoryCard[] = [];
 
   public constructor() {
+    this.generateGrid();
+    this.reset();
+  }
+
+  private generateGrid() {
     this.col = Math.ceil(Math.sqrt(this.cardsCount));
 
     this.gridStyle = {
       gridTemplateColumns: `repeat(${this.col}, 1fr)`,
     };
-
-    this.reset();
   }
 
   private shuffleArray<T>(array: T[]): T[] {
@@ -70,26 +74,32 @@ export class MemoryComponent {
     this.foundCards = [];
     this.cards = [];
 
+    this.cards = this.generateCards();
+  }
+
+  private generateCards(): MemoryCard[] {
     const images = this.shuffleArray(this.images);
 
-    const lcards: MemoryCard[] = [];
+    let cards: MemoryCard[] = [];
     for (let i = 0; i < this.cardsCount / 2; i++) {
       const selectedImage = images[0];
       images.shift();
       const cardId = uuid();
-      lcards.push({ id: cardId, image: selectedImage });
-      lcards.push({ id: cardId, image: selectedImage });
+      cards.push({ id: cardId, image: selectedImage });
+      cards.push({ id: cardId, image: selectedImage });
     }
 
-    this.cards = this.shuffleArray(lcards);
+    cards = this.shuffleArray(cards);
 
-    this.cards = this.cards.map((card, idx) => ({
+    cards = cards.map((card, idx) => ({
       ...card,
       index: idx,
     }));
+
+    return cards;
   }
 
-  protected manageCardsOnClick(card: MemoryCard) {
+  private manageCardsOnClick(card: MemoryCard) {
     this.moves++;
     if (this.activeCards.length < 1) {
       this.activeCards.push(card);
