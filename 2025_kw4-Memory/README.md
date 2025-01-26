@@ -13,4 +13,4 @@ A basic Memory game.
 
 # Video
 
-TODO:
+https://youtu.be/6__nMj_Ow-0
