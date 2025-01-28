@@ -1,0 +1,10 @@
+services:
+  keycloak:
+    image: "quay.io/keycloak/keycloak:26.1.0"
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=password
+      - KC_HTTP_RELATIVE_PATH=/auth
+    ports:
+      - "8080:8080"
+    command: ["start-dev", "--http-relative-path", "/auth"]
