@@ -3,4 +3,6 @@ export default interface GameState {
   draw(): void;
   stop(): void;
   start(): void;
+
+  keyboardEvents(keysPressed: string[]): void;
 }

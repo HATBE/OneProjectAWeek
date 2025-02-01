@@ -1,9 +1,7 @@
-import GameState from "../../engine/gameState/GameState";
+import AbstractGameState from "../../engine/gameState/AbstractGameState";
 import GameStateManager from "../../engine/gameState/GameStateManager";
 
-export default class MenuGameState implements GameState {
-  public constructor() {}
-
+export default class MenuGameState extends AbstractGameState {
   stop(): void {}
 
   start(): void {}
@@ -27,4 +25,6 @@ export default class MenuGameState implements GameState {
     ctx.font = "72px ARIAL";
     ctx.fillText("Welcome to menu", 100, 100);
   }
+
+  public keyboardEvents() {}
 }

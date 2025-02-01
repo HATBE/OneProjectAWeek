@@ -1,3 +1,4 @@
+import KeyboardListener from "../KeyboardListener";
 import Renderer from "../rendering/Renderer";
 import GameState from "./GameState";
 import GameStateFactory from "./GameStateFactory";
@@ -6,10 +7,13 @@ export default class GameStateManager {
   public static instance: GameStateManager;
 
   private renderer!: Renderer;
+  private keyboardListener: KeyboardListener;
 
   private currentGameState: GameState | null = null;
 
-  private constructor() {}
+  private constructor() {
+    this.keyboardListener = new KeyboardListener();
+  }
 
   // SINGLETON
   public static getInstatnce(): GameStateManager {
@@ -44,12 +48,12 @@ export default class GameStateManager {
     this.currentGameState.start();
   }
 
-  public tickCurrentGameState() {
+  public tickCurrentGameState(): void {
     if (!this.currentGameState) return;
     this.currentGameState.tick();
   }
 
-  public renderCurrentGameState() {
+  public renderCurrentGameState(): void {
     if (!this.currentGameState) return;
     this.getRenderer().clear();
     this.currentGameState.draw();
@@ -57,5 +61,14 @@ export default class GameStateManager {
 
   public getRenderer(): Renderer {
     return this.renderer;
+  }
+
+  public getCurrentGameState(): GameState | null {
+    return this.currentGameState;
+  }
+
+  public fireKeyBoardEvents(keysPressed: string[]): void {
+    if (!this.currentGameState) return;
+    this.currentGameState.keyboardEvents(keysPressed);
   }
 }
