@@ -5,7 +5,7 @@ import GameStateFactory from "./GameStateFactory";
 export default class GameStateManager {
   public static instance: GameStateManager;
 
-  private renderer: Renderer | null = null;
+  private renderer!: Renderer;
 
   private currentGameState: GameState | null = null;
 
@@ -51,6 +51,11 @@ export default class GameStateManager {
 
   public renderCurrentGameState() {
     if (!this.currentGameState) return;
+    this.getRenderer().clear();
     this.currentGameState.draw();
+  }
+
+  public getRenderer(): Renderer {
+    return this.renderer;
   }
 }

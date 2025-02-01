@@ -1,11 +1,10 @@
 import GameState from "../../engine/gameState/GameState";
 import GameStateManager from "../../engine/gameState/GameStateManager";
 
-export default class MenuGameState implements GameState {
+export default class InGameGameState implements GameState {
   public constructor() {}
 
   stop(): void {}
-
   start(): void {}
 
   tick(): void {}
@@ -25,6 +24,6 @@ export default class MenuGameState implements GameState {
     ctx.fillStyle = "black";
 
     ctx.font = "72px ARIAL";
-    ctx.fillText("Welcome to menu", 100, 100);
+    ctx.fillText("Welcome to ingame", 100, 100);
   }
 }

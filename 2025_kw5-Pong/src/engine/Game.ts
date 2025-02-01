@@ -22,8 +22,10 @@ export default class Game {
 
     this.renderer = new Renderer(this.canvas, this.width, this.height);
     GameStateManager.setUp(this.renderer);
+
     this.gameLoop = new GameLoop(targetFps);
 
-    GameStateManager.getInstatnce().switchGameState("menu"); // set initial gameState
+    // TODO: debug
+    GameStateManager.getInstatnce().switchGameState("ingame"); //GameStateManager.getInstatnce().switchGameState("menu"); // set initial gameState
   }
 }

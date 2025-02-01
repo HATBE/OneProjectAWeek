@@ -15,6 +15,7 @@ export default class GameLoop {
   }
 
   private loop(timestamp: number): void {
+    //console.log(this.currentFPS);
     const elapsed = timestamp - this.oldTimeStamp;
 
     if (elapsed >= this.frameDelay) {

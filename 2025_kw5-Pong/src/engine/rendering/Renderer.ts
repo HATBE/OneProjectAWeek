@@ -27,4 +27,30 @@ export default class Renderer {
     this.context.fillStyle = "red";
     this.context.fillRect(0, 0, this.height, this.width);
   }
+
+  public getContext(): CanvasRenderingContext2D {
+    return this.context;
+  }
+
+  public getWidth(): number {
+    return this.width;
+  }
+
+  public getHeight(): number {
+    return this.height;
+  }
+
+  public getXCenter(): number {
+    return this.width / 2;
+  }
+
+  public getYCenter(): number {
+    return this.height / 2;
+  }
+
+  public clear(): void {
+    this.getContext().clearRect(0, 0, this.width, this.height);
+  }
+
+  // TODO: renderAdapter so that you dont have to give the context,so you count change the rendering output
 }
