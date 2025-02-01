@@ -1,3 +1,5 @@
+import Renderable from "./Renderable";
+
 export default class Renderer {
   private canvas: HTMLCanvasElement;
   private context!: CanvasRenderingContext2D;
@@ -23,9 +25,47 @@ export default class Renderer {
     this.context = context;
   }
 
-  public draw(): void {
-    this.context.fillStyle = "red";
-    this.context.fillRect(0, 0, this.height, this.width);
+  // TODO: currently just squares supported, change later to sprite!
+  public drawRenderable(renderable: Renderable): void {
+    this.drawRect(
+      renderable.getX(),
+      renderable.getY(),
+      renderable.getWidth(),
+      renderable.getHeight(),
+      renderable.getColor()
+    );
+  }
+
+  public drawBackground(color: string): void {
+    this.drawRect(0, 0, this.getWidth(), this.getHeight(), color);
+  }
+
+  public drawRect(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    color: string = "black"
+  ): void {
+    this.getContext().fillStyle = color;
+    this.getContext().fillRect(x, y, width, height);
+  }
+
+  public drawDashedLine(
+    fromX: number,
+    fromY: number,
+    toX: number,
+    toY: number,
+    dashSize: number,
+    color: string = "black"
+  ): void {
+    this.getContext().fillStyle = color;
+    this.getContext().setLineDash([dashSize, dashSize]);
+    this.getContext().strokeStyle = color;
+    this.getContext().beginPath();
+    this.getContext().moveTo(fromX, fromY);
+    this.getContext().lineTo(toX, toY);
+    this.getContext().stroke();
   }
 
   public getContext(): CanvasRenderingContext2D {

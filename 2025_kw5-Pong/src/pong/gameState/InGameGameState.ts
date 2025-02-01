@@ -1,49 +1,46 @@
 import AbstractGameState from "../../engine/gameState/AbstractGameState";
 import GameStateManager from "../../engine/gameState/GameStateManager";
+import Ball from "../entities/Ball";
 
 export default class InGameGameState extends AbstractGameState {
-  private x: number = 0;
-  private y: number = 0;
+  private ctx = GameStateManager.getInstatnce().getRenderer().getContext();
 
-  stop(): void {}
-  start(): void {}
+  private ball = new Ball(0, 0);
 
-  tick(): void {
-    if (this.keysPressed.map((k) => k.toLocaleLowerCase()).includes("w")) {
-      this.y--;
+  public stop(): void {}
+  public start(): void {}
+
+  public tick(): void {
+    /*TODO: pedalsif (this.isKeyPressed("w")) {
+      this.ball.setY(this.ball.getY() - 1);
     }
 
-    if (this.keysPressed.map((k) => k.toLocaleLowerCase()).includes("a")) {
-      this.x--;
+    if (this.isKeyPressed("a")) {
+      this.ball.setX(this.ball.getX() - 1);
     }
 
-    if (this.keysPressed.map((k) => k.toLocaleLowerCase()).includes("s")) {
-      this.y++;
+    if (this.isKeyPressed("s")) {
+      this.ball.setY(this.ball.getY() + 1);
     }
 
-    if (this.keysPressed.map((k) => k.toLocaleLowerCase()).includes("d")) {
-      this.x++;
-    }
+    if (this.isKeyPressed("d")) {
+      this.ball.setX(this.ball.getX() + 1);
+    }*/
   }
 
-  draw(): void {
-    const ctx = GameStateManager.getInstatnce().getRenderer().getContext();
+  public draw(): void {
+    GameStateManager.getInstatnce().getRenderer().drawBackground("black");
+    GameStateManager.getInstatnce()
+      .getRenderer()
+      .drawDashedLine(
+        GameStateManager.getInstatnce().getRenderer().getWidth() / 2,
+        10 / 2, // half a dash
+        GameStateManager.getInstatnce().getRenderer().getWidth() / 2,
+        GameStateManager.getInstatnce().getRenderer().getHeight(),
+        10, // dash
+        "white"
+      );
 
-    ctx.fillStyle = "red";
-
-    ctx.fillRect(
-      0,
-      0,
-      GameStateManager.getInstatnce().getRenderer().getWidth(),
-      GameStateManager.getInstatnce().getRenderer().getHeight()
-    );
-
-    ctx.fillStyle = "black";
-
-    ctx.fillRect(this.x, this.y, 10, 10);
-  }
-
-  public keyboardEvents(keysPressed: string[]) {
-    this.keysPressed = keysPressed;
+    GameStateManager.getInstatnce().getRenderer().drawRenderable(this.ball);
   }
 }

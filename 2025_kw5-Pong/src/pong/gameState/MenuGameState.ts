@@ -25,6 +25,4 @@ export default class MenuGameState extends AbstractGameState {
     ctx.font = "72px ARIAL";
     ctx.fillText("Welcome to menu", 100, 100);
   }
-
-  public keyboardEvents() {}
 }
