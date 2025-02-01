@@ -8,6 +8,9 @@ export default class InGameGameState extends AbstractGameState {
   private leftPedal;
   private rightPedal;
 
+  private scoreRight = 0;
+  private scoreLeft = 0;
+
   public constructor() {
     super();
 
@@ -21,25 +24,33 @@ export default class InGameGameState extends AbstractGameState {
       GameStateManager.getInstatnce().getRenderer().getHeight() / 2 - 45
     );
 
-    this.ball = new Ball(
-      GameStateManager.getInstatnce().getRenderer().getWidth() / 2 - 5,
-      GameStateManager.getInstatnce().getRenderer().getHeight() / 2 - 5
-    );
+    this.ball = new Ball(0, 0);
+
+    this.resetBall();
   }
 
   public stop(): void {}
 
   public start(): void {
-    console.log(
-      "init",
-      Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()
-    );
-    this.ball.setDx(
-      Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()
-    );
-    this.ball.setDy(
-      Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()
-    );
+    this.resetBall();
+  }
+
+  private rightScored() {
+    this.scoreRight++;
+
+    if (this.scoreRight >= 10) {
+      //winner = "right";
+      GameStateManager.getInstatnce().switchGameState("gameover");
+    }
+  }
+
+  private leftScored() {
+    this.scoreLeft++;
+
+    if (this.scoreLeft >= 10) {
+      //winner = "left";
+      GameStateManager.getInstatnce().switchGameState("gameOver");
+    }
   }
 
   private tickBall(): void {
@@ -59,16 +70,16 @@ export default class InGameGameState extends AbstractGameState {
     }
     // if ball intersects left, death
     else if (this.ball.getX() <= 0) {
-      /*rightScored();
-      resetBall();*/
+      this.rightScored();
+      this.resetBall();
     }
     // if ball intersects right, death
     else if (
       this.ball.getX() + this.ball.getWidth() >=
       GameStateManager.getInstatnce().getRenderer().getWidth()
     ) {
-      /*leftScored();
-      resetBall();*/
+      this.leftScored();
+      this.resetBall();
     }
 
     if (
@@ -92,7 +103,7 @@ export default class InGameGameState extends AbstractGameState {
 
   private tickPedals(): void {
     // TODO: rework padel movement script
-    if (this.isKeyPressed("w")) {
+    if (this.isKeyPressed("ArrowUp")) {
       if (this.rightPedal.getY() - this.rightPedal.getSpeed() <= 0) {
         this.rightPedal.setY(0);
       } else {
@@ -102,7 +113,7 @@ export default class InGameGameState extends AbstractGameState {
       }
     }
 
-    if (this.isKeyPressed("s")) {
+    if (this.isKeyPressed("ArrowDown")) {
       if (
         this.rightPedal.getY() +
           this.rightPedal.getHeight() +
@@ -120,7 +131,7 @@ export default class InGameGameState extends AbstractGameState {
       }
     }
 
-    if (this.isKeyPressed("ArrowUp")) {
+    if (this.isKeyPressed("w")) {
       if (this.leftPedal.getY() - this.leftPedal.getSpeed() <= 0) {
         this.leftPedal.setY(0);
       } else {
@@ -128,7 +139,7 @@ export default class InGameGameState extends AbstractGameState {
       }
     }
 
-    if (this.isKeyPressed("ArrowDown")) {
+    if (this.isKeyPressed("s")) {
       if (
         this.leftPedal.getY() +
           this.leftPedal.getHeight() +
@@ -146,8 +157,28 @@ export default class InGameGameState extends AbstractGameState {
   }
 
   public tick(): void {
+    if (this.isKeyPressed("Escape")) {
+      GameStateManager.getInstatnce().switchGameState("menu");
+    }
+
     this.tickPedals();
     this.tickBall();
+  }
+
+  private resetBall() {
+    this.ball.setX(
+      GameStateManager.getInstatnce().getRenderer().getWidth() / 2 - 5
+    );
+    this.ball.setY(
+      GameStateManager.getInstatnce().getRenderer().getHeight() / 2 - 5
+    );
+
+    this.ball.setDx(
+      Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()
+    );
+    this.ball.setDy(
+      Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()
+    );
   }
 
   public draw(): void {
@@ -163,6 +194,29 @@ export default class InGameGameState extends AbstractGameState {
         GameStateManager.getInstatnce().getRenderer().getHeight(),
         10, // dash
         "white"
+      );
+
+    // score left
+    GameStateManager.getInstatnce()
+      .getRenderer()
+      .drawText(
+        this.scoreLeft.toString(),
+        GameStateManager.getInstatnce().getRenderer().getWidth() / 2 - 50,
+        50
+      );
+
+    // score right
+    GameStateManager.getInstatnce()
+      .getRenderer()
+      .drawText(
+        this.scoreRight.toString(),
+        GameStateManager.getInstatnce().getRenderer().getWidth() / 2 +
+          50 -
+          GameStateManager.getInstatnce()
+            .getRenderer()
+            .getContext()
+            .measureText(this.scoreLeft.toString()).width,
+        50
       );
 
     // ball

@@ -25,7 +25,6 @@ export default class Game {
 
     this.gameLoop = new GameLoop(targetFps);
 
-    // TODO: debug
-    GameStateManager.getInstatnce().switchGameState("ingame"); //GameStateManager.getInstatnce().switchGameState("menu"); // set initial gameState
+    GameStateManager.getInstatnce().switchGameState("menu"); // set initial gameState
   }
 }

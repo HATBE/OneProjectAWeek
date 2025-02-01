@@ -68,6 +68,17 @@ export default class Renderer {
     this.getContext().stroke();
   }
 
+  public drawText(
+    text: string,
+    x: number,
+    y: number
+    //center: boolean = false
+  ): void {
+    this.getContext().fillStyle = "white";
+    this.getContext().font = "48px ARCADECLASSIC";
+    this.getContext().fillText(text, x, y);
+  }
+
   public getContext(): CanvasRenderingContext2D {
     return this.context;
   }

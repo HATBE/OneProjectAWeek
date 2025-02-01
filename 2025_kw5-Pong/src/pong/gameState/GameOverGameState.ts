@@ -1,14 +1,14 @@
 import AbstractGameState from "../../engine/gameState/AbstractGameState";
 import GameStateManager from "../../engine/gameState/GameStateManager";
 
-export default class MenuGameState extends AbstractGameState {
+export default class GameOverGameState extends AbstractGameState {
   stop(): void {}
 
   start(): void {}
 
   tick(): void {
-    if (this.isKeyPressed("s")) {
-      GameStateManager.getInstatnce().switchGameState("ingame");
+    if (this.isKeyPressed("m")) {
+      GameStateManager.getInstatnce().switchGameState("menu");
     }
   }
 
@@ -17,25 +17,16 @@ export default class MenuGameState extends AbstractGameState {
 
     const ctx = GameStateManager.getInstatnce().getRenderer().getContext();
 
-    const title = `Pong`;
-    const subtitle = 'Press "S" to start the game!';
-    const infoText = 'Press "ESC" to quit the game.';
+    const title = `Game OVER!`;
+    const infoText = 'Press "M" to go to the menu.';
 
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "red";
     ctx.font = "60px ARCADECLASSIC";
     ctx.fillText(
       title,
       GameStateManager.getInstatnce().getRenderer().getWidth() / 2 -
         ctx.measureText(title).width / 2,
       GameStateManager.getInstatnce().getRenderer().getHeight() / 2 - 10
-    );
-    ctx.fillStyle = "red";
-    ctx.font = "25px ARCADECLASSIC";
-    ctx.fillText(
-      subtitle,
-      GameStateManager.getInstatnce().getRenderer().getWidth() / 2 -
-        ctx.measureText(subtitle).width / 2,
-      GameStateManager.getInstatnce().getRenderer().getHeight() / 2 + 20
     );
     ctx.fillStyle = "white";
     ctx.font = "16px ARCADECLASSIC";

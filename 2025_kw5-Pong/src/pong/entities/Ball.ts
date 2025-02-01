@@ -5,7 +5,7 @@ export default class Ball extends Entity {
   private dy = 0;
 
   public constructor(x: number, y: number) {
-    super(x, y, 10, 10, "white", 2);
+    super(x, y, 10, 10, "white", 3);
   }
 
   public getDx(): number {
