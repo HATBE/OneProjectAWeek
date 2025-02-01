@@ -3,10 +3,9 @@ import Entity from "./Entity";
 export default class Ball extends Entity {
   private dx = 0;
   private dy = 0;
-  private speed = 3;
 
   public constructor(x: number, y: number) {
-    super(x, y, 10, 10, "white");
+    super(x, y, 10, 10, "white", 2);
   }
 
   public getDx(): number {
@@ -23,9 +22,5 @@ export default class Ball extends Entity {
 
   public setDy(dy: number): void {
     this.dy = dy;
-  }
-
-  public getSpeed(): number {
-    return this.speed;
   }
 }

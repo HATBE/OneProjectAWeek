@@ -1,35 +1,159 @@
 import AbstractGameState from "../../engine/gameState/AbstractGameState";
 import GameStateManager from "../../engine/gameState/GameStateManager";
 import Ball from "../entities/Ball";
+import Pedal from "../entities/Pedal";
 
 export default class InGameGameState extends AbstractGameState {
-  private ctx = GameStateManager.getInstatnce().getRenderer().getContext();
+  private ball;
+  private leftPedal;
+  private rightPedal;
 
-  private ball = new Ball(0, 0);
+  public constructor() {
+    super();
+
+    this.rightPedal = new Pedal(
+      GameStateManager.getInstatnce().getRenderer().getWidth() - 20,
+      GameStateManager.getInstatnce().getRenderer().getHeight() / 2 - 45
+    );
+
+    this.leftPedal = new Pedal(
+      10,
+      GameStateManager.getInstatnce().getRenderer().getHeight() / 2 - 45
+    );
+
+    this.ball = new Ball(
+      GameStateManager.getInstatnce().getRenderer().getWidth() / 2 - 5,
+      GameStateManager.getInstatnce().getRenderer().getHeight() / 2 - 5
+    );
+  }
 
   public stop(): void {}
-  public start(): void {}
 
-  public tick(): void {
-    /*TODO: pedalsif (this.isKeyPressed("w")) {
-      this.ball.setY(this.ball.getY() - 1);
+  public start(): void {
+    console.log(
+      "init",
+      Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()
+    );
+    this.ball.setDx(
+      Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()
+    );
+    this.ball.setDy(
+      Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()
+    );
+  }
+
+  private tickBall(): void {
+    this.ball.setX(this.ball.getX() + this.ball.getDx());
+    this.ball.setY(this.ball.getY() + this.ball.getDy());
+
+    // if ball intersects top, redirect
+    if (this.ball.getY() <= 0) {
+      this.ball.setDy(-this.ball.getDy());
+    }
+    // if ball intersects bottom, redirect
+    else if (
+      this.ball.getY() + this.ball.getWidth() >=
+      GameStateManager.getInstatnce().getRenderer().getHeight()
+    ) {
+      this.ball.setDy(-this.ball.getDy());
+    }
+    // if ball intersects left, death
+    else if (this.ball.getX() <= 0) {
+      /*rightScored();
+      resetBall();*/
+    }
+    // if ball intersects right, death
+    else if (
+      this.ball.getX() + this.ball.getWidth() >=
+      GameStateManager.getInstatnce().getRenderer().getWidth()
+    ) {
+      /*leftScored();
+      resetBall();*/
     }
 
-    if (this.isKeyPressed("a")) {
-      this.ball.setX(this.ball.getX() - 1);
+    if (
+      this.ball.getX() < this.leftPedal.getX() + this.ball.getWidth() &&
+      this.ball.getY() + this.ball.getHeight() > this.leftPedal.getY() &&
+      this.ball.getY() < this.leftPedal.getY() + this.leftPedal.getHeight()
+    ) {
+      // right, top, bottom
+      this.ball.setDx(-this.ball.getDx());
+    }
+    // if ball intersects right, redirect
+    else if (
+      this.ball.getX() + this.ball.getWidth() > this.rightPedal.getX() &&
+      this.ball.getY() + this.ball.getHeight() > this.rightPedal.getY() &&
+      this.ball.getY() < this.rightPedal.getY() + this.rightPedal.getHeight()
+    ) {
+      // left, top, bottom
+      this.ball.setDx(-this.ball.getDx());
+    }
+  }
+
+  private tickPedals(): void {
+    // TODO: rework padel movement script
+    if (this.isKeyPressed("w")) {
+      if (this.rightPedal.getY() - this.rightPedal.getSpeed() <= 0) {
+        this.rightPedal.setY(0);
+      } else {
+        this.rightPedal.setY(
+          this.rightPedal.getY() - this.rightPedal.getSpeed()
+        );
+      }
     }
 
     if (this.isKeyPressed("s")) {
-      this.ball.setY(this.ball.getY() + 1);
+      if (
+        this.rightPedal.getY() +
+          this.rightPedal.getHeight() +
+          this.rightPedal.getSpeed() <=
+        GameStateManager.getInstatnce().getRenderer().getHeight()
+      ) {
+        this.rightPedal.setY(
+          this.rightPedal.getY() + this.rightPedal.getSpeed()
+        );
+      } else {
+        this.rightPedal.setY(
+          GameStateManager.getInstatnce().getRenderer().getHeight() -
+            this.rightPedal.getHeight()
+        );
+      }
     }
 
-    if (this.isKeyPressed("d")) {
-      this.ball.setX(this.ball.getX() + 1);
-    }*/
+    if (this.isKeyPressed("ArrowUp")) {
+      if (this.leftPedal.getY() - this.leftPedal.getSpeed() <= 0) {
+        this.leftPedal.setY(0);
+      } else {
+        this.leftPedal.setY(this.leftPedal.getY() - this.leftPedal.getSpeed());
+      }
+    }
+
+    if (this.isKeyPressed("ArrowDown")) {
+      if (
+        this.leftPedal.getY() +
+          this.leftPedal.getHeight() +
+          this.leftPedal.getSpeed() <=
+        GameStateManager.getInstatnce().getRenderer().getHeight()
+      ) {
+        this.leftPedal.setY(this.leftPedal.getY() + this.leftPedal.getSpeed());
+      } else {
+        this.leftPedal.setY(
+          GameStateManager.getInstatnce().getRenderer().getHeight() -
+            this.leftPedal.getHeight()
+        );
+      }
+    }
+  }
+
+  public tick(): void {
+    this.tickPedals();
+    this.tickBall();
   }
 
   public draw(): void {
-    GameStateManager.getInstatnce().getRenderer().drawBackground("black");
+    GameStateManager.getInstatnce().getRenderer().drawBackground("black"); // background
+
+    // dashed center line
     GameStateManager.getInstatnce()
       .getRenderer()
       .drawDashedLine(
@@ -41,6 +165,17 @@ export default class InGameGameState extends AbstractGameState {
         "white"
       );
 
+    // ball
     GameStateManager.getInstatnce().getRenderer().drawRenderable(this.ball);
+
+    // left pedal
+    GameStateManager.getInstatnce()
+      .getRenderer()
+      .drawRenderable(this.leftPedal);
+
+    // right pedal
+    GameStateManager.getInstatnce()
+      .getRenderer()
+      .drawRenderable(this.rightPedal);
   }
 }

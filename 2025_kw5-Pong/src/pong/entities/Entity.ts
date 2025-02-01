@@ -6,19 +6,22 @@ export default class Entity implements Renderable {
   private width: number;
   private height: number;
   private color: string;
+  private speed;
 
   public constructor(
     x: number,
     y: number,
     width: number,
     height: number,
-    color: string
+    color: string,
+    speed: number = 3
   ) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
     this.color = color;
+    this.speed = speed;
   }
 
   public getX(): number {
@@ -59,5 +62,9 @@ export default class Entity implements Renderable {
 
   public setColor(color: string): void {
     this.color = color;
+  }
+
+  public getSpeed(): number {
+    return this.speed;
   }
 }
