@@ -67,4 +67,8 @@ export default class Entity implements Renderable {
   public getSpeed(): number {
     return this.speed;
   }
+
+  public setSpeed(speed: number): void {
+    this.speed = speed;
+  }
 }

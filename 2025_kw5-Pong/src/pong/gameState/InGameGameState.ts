@@ -49,7 +49,7 @@ export default class InGameGameState extends AbstractGameState {
 
     if (this.scoreLeft >= 10) {
       //winner = "left";
-      GameStateManager.getInstatnce().switchGameState("gameOver");
+      GameStateManager.getInstatnce().switchGameState("gameover");
     }
   }
 
@@ -174,10 +174,16 @@ export default class InGameGameState extends AbstractGameState {
     );
 
     this.ball.setDx(
-      Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()
+      (Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()) +
+        Math.random() * 2
     );
     this.ball.setDy(
-      Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()
+      (Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()) +
+        Math.random() * 2
+    );
+
+    this.ball.setSpeed(
+      Math.max(Math.max(this.scoreLeft, this.scoreRight) + 0.5, 2)
     );
   }
 
