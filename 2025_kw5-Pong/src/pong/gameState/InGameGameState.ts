@@ -174,12 +174,10 @@ export default class InGameGameState extends AbstractGameState {
     );
 
     this.ball.setDx(
-      (Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()) +
-        Math.random() * 2
+      Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()
     );
     this.ball.setDy(
-      (Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()) +
-        Math.random() * 2
+      Math.random() < 0.5 ? this.ball.getSpeed() : -this.ball.getSpeed()
     );
 
     this.ball.setSpeed(

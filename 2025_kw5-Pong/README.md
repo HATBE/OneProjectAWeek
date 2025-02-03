@@ -26,6 +26,6 @@ Gameover when score of one party is more then 10
 
 ## Video
 
-https://www.youtube.com/watch?v=todo
+https://www.youtube.com/watch?v=q56CTRi9kaU
 
-[![Youtube video](https://img.youtube.com/vi/todo/0.jpg)](https://www.youtube.com/watch?v=todo)
+[![Youtube video](https://img.youtube.com/vi/q56CTRi9kaU/0.jpg)](https://www.youtube.com/watch?v=q56CTRi9kaU)
