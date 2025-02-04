@@ -1,4 +1,5 @@
 import jsSHA from "jssha";
+import cors from "cors";
 
 const period = 30;
 
@@ -48,17 +49,26 @@ const generateTOTP = (key: string) => {
 
   otp = otp.substring(start, start + 6);
 
-  const expires = Math.ceil((timestamp + 1) / (period * 1000)) * period * 1000;
+  const exp = (Math.floor(timestamp / period) + 1) * period;
 
-  return { otp, expires };
+  return { otp, exp };
 };
 
 import express from "express";
 const app = express();
 const port = 3000;
 
+app.use(
+  "*",
+  cors({
+    methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
 app.get("/:token", (req, res) => {
-  res.send(generateTOTP(req.params.token));
+  res.json(generateTOTP(req.params.token));
 });
 
 app.listen(port, () => {
