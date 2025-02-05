@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import jsSHA from 'jssha';
-import { TotpItem } from '../models/totp.model';
+import { TotpToken } from '../models/totp-token.model';
+import { TotpItem } from '../models/totp-item.model';
 
 @Injectable({
   providedIn: 'root',
@@ -28,11 +29,18 @@ export class TotpService {
     );
   }
 
-  public getAll(): string[] {
-    return ['JBSWY3DPEHPK3PXP', 'abfbabfbafbafbdddbdb3'];
+  public getPeriod(): number {
+    return this.period;
   }
 
-  public generateTOTP(key: string): TotpItem {
+  public getAll(): TotpItem[] {
+    return [
+      { name: 'token1', key: 'JBSWY3DPEHPK3PXP' },
+      { name: 'hand', key: 'abfbabfbafbafbdddbdb3' },
+    ];
+  }
+
+  public generateTOTP(key: string): TotpToken {
     const timestamp = Math.floor(Date.now() / 1000);
 
     let time = Math.round(Math.floor(timestamp / this.period))
@@ -56,10 +64,10 @@ export class TotpService {
 
     const start = Math.max(otp.length - 6, 0);
 
-    const token = parseInt(otp.substring(start, start + 6), 10);
+    const token = otp.substring(start, start + 6).padStart(6, '0');
 
     const exp = (Math.floor(timestamp / this.period) + 1) * this.period;
 
-    return { otp: token, exp };
+    return { token, exp };
   }
 }

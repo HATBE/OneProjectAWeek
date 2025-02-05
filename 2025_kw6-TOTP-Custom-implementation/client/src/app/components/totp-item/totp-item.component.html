@@ -1,8 +1,8 @@
 <div>
   <div>
-    {{ key }}
-    {{ totpItem.otp }}
+    {{ totpItem.name }} ->
+    {{ token.token }}
   </div>
 
-  <div><progress [value]="secsTilRefresh" max="30"></progress></div>
+  <div><progress [value]="secsTilRefresh" [max]="period"></progress></div>
 </div>

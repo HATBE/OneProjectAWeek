@@ -1,7 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { TotpItem } from '../../models/totp.model';
+import { TotpItem } from '../../models/totp-item.model';
 import { CommonModule } from '@angular/common';
 import { TotpService } from '../../services/totp.service';
+import { TotpToken } from '../../models/totp-token.model';
 
 @Component({
   selector: 'app-totp-item',
@@ -11,9 +12,10 @@ import { TotpService } from '../../services/totp.service';
   styleUrl: './totp-item.component.css',
 })
 export class TotpItemComponent implements OnInit, OnDestroy {
-  @Input() key!: string;
+  @Input() totpItem!: TotpItem;
 
-  protected totpItem!: TotpItem;
+  protected period: number = 0;
+  protected token!: TotpToken;
 
   private intervalId: any;
   protected secsTilRefresh: number = 0;
@@ -21,6 +23,7 @@ export class TotpItemComponent implements OnInit, OnDestroy {
   constructor(protected totpService: TotpService) {}
 
   ngOnInit() {
+    this.period = this.totpService.getPeriod();
     this.generateNewToken();
     this.startInterval();
   }
@@ -37,7 +40,7 @@ export class TotpItemComponent implements OnInit, OnDestroy {
 
   protected updateSecsTilRefresh = () => {
     const currentTime = Math.floor(Date.now() / 1000);
-    this.secsTilRefresh = Math.max(0, this.totpItem.exp - currentTime);
+    this.secsTilRefresh = Math.max(0, this.token.exp - currentTime);
 
     if (this.secsTilRefresh === 0) {
       this.onExpire();
@@ -49,6 +52,7 @@ export class TotpItemComponent implements OnInit, OnDestroy {
   }
 
   private generateNewToken() {
-    this.totpItem = this.totpService.generateTOTP(this.key);
+    this.token = this.totpService.generateTOTP(this.totpItem.key);
+    this.updateSecsTilRefresh();
   }
 }

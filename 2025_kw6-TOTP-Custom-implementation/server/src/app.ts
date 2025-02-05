@@ -47,11 +47,11 @@ const generateTOTP = (key: string) => {
 
   const start = Math.max(otp.length - 6, 0);
 
-  otp = otp.substring(start, start + 6);
+  const token = otp.substring(start, start + 6).padStart(6, "0");
 
   const exp = (Math.floor(timestamp / period) + 1) * period;
 
-  return { otp, exp };
+  return { token, exp };
 };
 
 import express from "express";
