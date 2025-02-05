@@ -61,7 +61,11 @@ export class TotpItemComponent implements OnInit, OnDestroy {
   }
 
   protected onDelete() {
-    this.totpService.deleteById(this.totpItem.id);
-    this.updateList.emit();
+    if (
+      confirm(`Do you really want to delete the token ${this.totpItem.name}? This is irreversible!`)
+    ) {
+      this.totpService.deleteById(this.totpItem.id);
+      this.updateList.emit();
+    }
   }
 }

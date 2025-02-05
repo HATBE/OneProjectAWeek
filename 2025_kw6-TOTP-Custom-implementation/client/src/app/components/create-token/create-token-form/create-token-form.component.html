@@ -1,0 +1,19 @@
+<app-error-banner *ngIf="error" [message]="error" />
+
+<form [formGroup]="form">
+  <div class="mb-3">
+    <label for="name">Name</label>
+    <input formControlName="name" id="name" type="text" class="form-control" />
+  </div>
+  <div class="mb-3">
+    <label for="secret">Secret</label>
+    <input formControlName="secret" id="secret" type="text" class="form-control" />
+  </div>
+
+  <button (click)="onSubmit()" type="submit" class="btn btn-primary gradient-blue w-100">
+    <ng-container *ngIf="isLoading">
+      <app-loading-spinner [small]="true"></app-loading-spinner>
+    </ng-container>
+    <ng-container *ngIf="!isLoading">Save</ng-container>
+  </button>
+</form>

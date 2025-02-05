@@ -11,6 +11,10 @@
   </button>
 </div>
 
-<app-create-token-camera *ngIf="!manualEntry" />
+<div class="row">
+  <div class="col-12 col-md-6 offset-md-3">
+    <app-create-token-camera (onCreate)="onCreate($event)" *ngIf="!manualEntry" />
 
-<app-create-token-form (onCreate)="onCreate($event)" *ngIf="manualEntry" />
+    <app-create-token-form (onCreate)="onCreate($event)" *ngIf="manualEntry" />
+  </div>
+</div>

@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TotpService } from '../../services/totp.service';
-import { CreateTokenCameraComponent } from '../../components/create-token-camera/create-token-camera.component';
-import { CreateTokenFormComponent } from '../../components/create-token-form/create-token-form.component';
+import { CreateTokenCameraComponent } from '../../components/create-token/create-token-camera/create-token-camera.component';
+import { CreateTokenFormComponent } from '../../components/create-token/create-token-form/create-token-form.component';
 import { TotpItemForm } from '../../models/totp-item.model';
 
 @Component({
@@ -14,7 +14,7 @@ import { TotpItemForm } from '../../models/totp-item.model';
   styleUrl: './create-token-page.component.css',
 })
 export class CreateTokenPageComponent implements OnInit {
-  protected manualEntry = true; //TODO: debug reset to false;
+  protected manualEntry = false;
 
   public constructor(private totpService: TotpService, private router: Router) {}
 

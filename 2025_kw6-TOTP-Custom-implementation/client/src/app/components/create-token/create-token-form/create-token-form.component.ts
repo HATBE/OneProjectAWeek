@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { TotpItemForm } from '../../models/totp-item.model';
-import { ErrorBannerComponent } from '../banner/error-banner/error-banner.component';
-import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
-import { TotpService } from '../../services/totp.service';
-import { ValidationService } from '../../services/validation.service';
+import { TotpItemForm } from '../../../models/totp-item.model';
+import { ErrorBannerComponent } from '../../banner/error-banner/error-banner.component';
+import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
+import { ValidationService } from '../../../services/validation.service';
+import TokenCreator from '../token-creator';
 
 @Component({
   selector: 'app-create-token-form',
@@ -21,7 +21,7 @@ import { ValidationService } from '../../services/validation.service';
   templateUrl: './create-token-form.component.html',
   styleUrl: './create-token-form.component.css',
 })
-export class CreateTokenFormComponent {
+export class CreateTokenFormComponent implements TokenCreator {
   @Output() onCreate: EventEmitter<TotpItemForm> = new EventEmitter<TotpItemForm>();
 
   protected form: FormGroup;
