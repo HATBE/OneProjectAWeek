@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { BarcodeFormat } from '@zxing/library';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
 import { OTPAuthData, OtpAuthParseService } from '../../../services/otpauth-parse.service';
 import { ErrorBannerComponent } from '../../banner/error-banner/error-banner.component';
+import { CameraSelectorComponent } from '../../camera-selector/camera-selector.component';
 
 @Component({
   selector: 'app-create-token-camera',
@@ -20,6 +21,7 @@ import { ErrorBannerComponent } from '../../banner/error-banner/error-banner.com
     ReactiveFormsModule,
     LoadingSpinnerComponent,
     ErrorBannerComponent,
+    CameraSelectorComponent,
   ],
   templateUrl: './create-token-camera.component.html',
   styleUrl: './create-token-camera.component.css',
@@ -27,32 +29,20 @@ import { ErrorBannerComponent } from '../../banner/error-banner/error-banner.com
 export class CreateTokenCameraComponent implements TokenCreator {
   @Output() onCreate: EventEmitter<TotpItemForm> = new EventEmitter<TotpItemForm>();
 
-  protected cameraForm: FormGroup;
   protected availableCameras: MediaDeviceInfo[] = [];
   protected selectedCamera: MediaDeviceInfo | undefined = undefined;
 
   protected error: string | null = null;
   protected isLoading: boolean = false;
-
   protected cameraEnabled = false;
-
   protected foundOtp: OTPAuthData | null = null;
 
-  allowedFormats = [BarcodeFormat.QR_CODE];
-
-  public constructor(private formBuilder: FormBuilder) {
-    this.cameraForm = this.formBuilder.group({
-      cameraId: -1,
-    });
-  }
+  protected allowedFormats = [BarcodeFormat.QR_CODE];
 
   protected onSuccessfullScan(scan: string) {
     this.cameraEnabled = false;
-
     try {
       this.foundOtp = OtpAuthParseService.parseOTPAuthURL(scan);
-
-      console.log(this.foundOtp);
     } catch (error) {
       this.setError('ERROR!');
     }
@@ -66,15 +56,11 @@ export class CreateTokenCameraComponent implements TokenCreator {
 
     if (this.availableCameras.length === 1) {
       this.selectedCamera = cameras[0];
+      this.cameraEnabled = true;
     }
   }
 
-  protected onCameraSelected() {
-    const cameraId = this.cameraForm.getRawValue().cameraId;
-    const camera = this.availableCameras.find((camera) => {
-      return camera.deviceId === cameraId;
-    });
-
+  protected handleCameraSelected(camera: MediaDeviceInfo) {
     this.selectedCamera = camera;
     this.cameraEnabled = true;
   }

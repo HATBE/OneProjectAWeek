@@ -1,27 +1,22 @@
 <div *ngIf="!foundOtp">
   <app-loading-spinner *ngIf="availableCameras.length <= 1" />
+  <app-error-banner *ngIf="error" [message]="error"></app-error-banner>
 
-  <app-error-banner *ngIf="error" [message]="error" />
+  <app-camera-selector
+    *ngIf="availableCameras.length >= 1"
+    [availableCameras]="availableCameras"
+    (cameraSelected)="handleCameraSelected($event)"
+  ></app-camera-selector>
 
-  <form [formGroup]="cameraForm" *ngIf="availableCameras.length >= 1">
-    <div class="mb-3">
-      <select formControlName="cameraId" class="form-select">
-        <option disabled selected value="-1">Select a Camera</option>
-        <option *ngFor="let camera of availableCameras" [value]="camera.deviceId">
-          {{ camera.label }}
-        </option>
-      </select>
-    </div>
-    <button class="btn btn-primary" type="submit" (click)="onCameraSelected()">Select</button>
-  </form>
-
-  <zxing-scanner
-    (camerasFound)="onCamerasFound($event)"
-    (scanSuccess)="onSuccessfullScan($event)"
-    [formats]="allowedFormats"
-    [enable]="cameraEnabled"
-    [device]="selectedCamera === null ? undefined : selectedCamera"
-  ></zxing-scanner>
+  <div class="rounded overflow-hidden mt-3">
+    <zxing-scanner
+      (camerasFound)="onCamerasFound($event)"
+      (scanSuccess)="onSuccessfullScan($event)"
+      [formats]="allowedFormats"
+      [enable]="cameraEnabled"
+      [device]="selectedCamera === null ? undefined : selectedCamera"
+    ></zxing-scanner>
+  </div>
 </div>
 
 <div *ngIf="foundOtp">

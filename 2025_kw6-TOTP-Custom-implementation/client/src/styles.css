@@ -56,31 +56,13 @@ select:active {
   border-color: inherit !important;
 }
 
-textarea:focus,
-textarea.form-control:focus,
-input.form-control:focus,
-input[type='text']:focus,
-input[type='password']:focus,
-input[type='email']:focus,
-input[type='number']:focus,
-select:focus,
-[type='text'].form-control:focus,
-[type='password'].form-control:focus,
-[type='email'].form-control:focus,
-[type='tel'].form-control:focus,
-[contenteditable].form-control:focus {
-  box-shadow: none;
-}
-input,
-textarea,
-select,
-#searchbar-btn {
-  border: 1px solid black !important;
-}
 input,
 textarea,
 select {
+  background-color: var(--bs-dark) !important;
+  border: none !important;
   outline: none;
+  color: var(--bs-light) !important;
 }
 
 .card {
