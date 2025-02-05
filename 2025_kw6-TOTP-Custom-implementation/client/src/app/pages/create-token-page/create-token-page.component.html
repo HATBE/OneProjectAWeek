@@ -1,1 +1,16 @@
-<p>create-token-page works!</p>
+<div class="mb-3">
+  <button class="btn btn-dark" (click)="toggleManualEntry()">
+    <span *ngIf="manualEntry">
+      <i class="me-2 bi bi-camera"></i>
+      Use camera
+    </span>
+    <span *ngIf="!manualEntry">
+      <i class="me-2 bi bi-input-cursor-text"></i>
+      Enter manual
+    </span>
+  </button>
+</div>
+
+<app-create-token-camera *ngIf="!manualEntry" />
+
+<app-create-token-form (onCreate)="onCreate($event)" *ngIf="manualEntry" />

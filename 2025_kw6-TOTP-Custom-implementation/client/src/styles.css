@@ -59,15 +59,15 @@ select:active {
 textarea:focus,
 textarea.form-control:focus,
 input.form-control:focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus,
-input[type="number"]:focus,
+input[type='text']:focus,
+input[type='password']:focus,
+input[type='email']:focus,
+input[type='number']:focus,
 select:focus,
-[type="text"].form-control:focus,
-[type="password"].form-control:focus,
-[type="email"].form-control:focus,
-[type="tel"].form-control:focus,
+[type='text'].form-control:focus,
+[type='password'].form-control:focus,
+[type='email'].form-control:focus,
+[type='tel'].form-control:focus,
 [contenteditable].form-control:focus {
   box-shadow: none;
 }
@@ -91,5 +91,9 @@ label {
   margin: 0;
   font-weight: bold;
   user-select: none;
-  color: var(--bs-dark) !important;
+  color: var(--bs-light) !important;
+}
+
+.border-dashed {
+  border-style: dashed !important;
 }

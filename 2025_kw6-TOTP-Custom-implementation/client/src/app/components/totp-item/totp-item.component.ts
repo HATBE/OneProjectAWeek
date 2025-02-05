@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { TotpItem } from '../../models/totp-item.model';
 import { CommonModule } from '@angular/common';
 import { TotpService } from '../../services/totp.service';
@@ -63,7 +56,7 @@ export class TotpItemComponent implements OnInit, OnDestroy {
   }
 
   private generateNewToken() {
-    this.token = this.totpService.generateTOTP(this.totpItem.key);
+    this.token = this.totpService.generateTOTP(this.totpItem.secret);
     this.updateSecsTilRefresh();
   }
 

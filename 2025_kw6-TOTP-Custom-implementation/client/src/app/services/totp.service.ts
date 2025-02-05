@@ -18,7 +18,7 @@ export class TotpService {
     const bits = [...cleanBase32]
       .map((char) => {
         const val = base32chars.indexOf(char);
-        if (val === -1) throw new Error('Invalid base32 character in key');
+        if (val === -1) throw new Error('Invalid base32 character in secret');
         return val.toString(2).padStart(5, '0');
       })
       .join('');
@@ -49,18 +49,14 @@ export class TotpService {
     }
   }
 
-  public create(name: string, key: string): void {
-    const newItem: TotpItem = { id: uuidv4(), name, key };
+  public create(name: string, secret: string): void {
+    const newItem: TotpItem = { id: uuidv4(), name, secret };
     const itemsBefore = localStorage.getItem(this.storageKey);
-
-    console.log('create');
 
     try {
       const items: TotpItem[] = JSON.parse(itemsBefore ?? '[]');
 
       items.push(newItem);
-
-      console.log(items);
 
       localStorage.setItem(this.storageKey, JSON.stringify(items));
     } catch (error) {
@@ -83,7 +79,7 @@ export class TotpService {
     }
   }
 
-  public generateTOTP(key: string): TotpToken {
+  public generateTOTP(secret: string): TotpToken {
     const timestamp = Math.floor(Date.now() / 1000);
 
     let time = Math.round(Math.floor(timestamp / this.period))
@@ -93,7 +89,7 @@ export class TotpService {
 
     const sha = new jsSHA('SHA-1', 'HEX');
 
-    sha.setHMACKey(this.base32tohex(key), 'HEX');
+    sha.setHMACKey(this.base32tohex(secret), 'HEX');
     sha.update(time);
 
     const hmac = sha.getHMAC('HEX');
@@ -101,8 +97,7 @@ export class TotpService {
     const offset = parseInt(hmac.slice(-1), 16);
 
     let otp = (
-      parseInt(hmac.slice(offset * 2, offset * 2 + 8), 16) &
-      parseInt('7fffffff', 16)
+      parseInt(hmac.slice(offset * 2, offset * 2 + 8), 16) & parseInt('7fffffff', 16)
     ).toString();
 
     const start = Math.max(otp.length - 6, 0);

@@ -23,6 +23,5 @@ export class TokenListComponent implements OnInit {
 
   protected updateList() {
     this.topts = this.totpService.getAll();
-    console.log(this.topts);
   }
 }
