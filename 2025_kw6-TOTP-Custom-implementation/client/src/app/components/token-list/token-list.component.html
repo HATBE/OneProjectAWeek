@@ -1,7 +1,13 @@
-<div *ngIf="topts">
+<div *ngIf="topts.length <= 0">
+  Currently there are no tokens here. Would you like to
+  <a routerLink="/add" routerLinkActive="router-link-active">add one?</a>
+</div>
+
+<div *ngIf="topts.length > 0">
   <div class="row g-3" style="max-width: 500px">
+    <!--TODO:-->
     <div class="col-12" *ngFor="let totp of topts">
-      <app-totp-item [totpItem]="totp" />
+      <app-totp-item [totpItem]="totp" (updateList)="updateList()" />
     </div>
   </div>
 </div>

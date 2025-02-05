@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import jsSHA from 'jssha';
 import { TotpToken } from '../models/totp-token.model';
 import { TotpItem } from '../models/totp-item.model';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TotpService {
   private period = 30;
+  private storageKey = 'todo-items';
 
   private base32tohex(base32: string): string {
     const base32chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
@@ -33,15 +35,52 @@ export class TotpService {
     return this.period;
   }
 
-  public deleteById(id: number) {
-    console.log(id);
+  public deleteById(id: string): void {
+    const itemsBefore = localStorage.getItem(this.storageKey);
+
+    try {
+      let items: TotpItem[] = JSON.parse(itemsBefore ?? '[]');
+
+      items = items.filter((item) => item.id !== id); // Fixed: Added return statement implicitly
+
+      localStorage.setItem(this.storageKey, JSON.stringify(items));
+    } catch (error) {
+      console.error('Error deleting item:', error);
+    }
+  }
+
+  public create(name: string, key: string): void {
+    const newItem: TotpItem = { id: uuidv4(), name, key };
+    const itemsBefore = localStorage.getItem(this.storageKey);
+
+    console.log('create');
+
+    try {
+      const items: TotpItem[] = JSON.parse(itemsBefore ?? '[]');
+
+      items.push(newItem);
+
+      console.log(items);
+
+      localStorage.setItem(this.storageKey, JSON.stringify(items));
+    } catch (error) {
+      console.error('Error creating item:', error);
+    }
   }
 
   public getAll(): TotpItem[] {
-    return [
-      { id: 1, name: 'Test token 1', key: 'JBSWY3DPEHPK3PXP' },
-      { id: 2, name: 'Discord', key: 'abfbabfbafbafbdddbdb3' },
-    ];
+    const items = localStorage.getItem(this.storageKey);
+
+    if (!items) {
+      return [];
+    }
+
+    try {
+      return JSON.parse(items);
+    } catch (error) {
+      console.error('Error parsing items:', error);
+      return [];
+    }
   }
 
   public generateTOTP(key: string): TotpToken {

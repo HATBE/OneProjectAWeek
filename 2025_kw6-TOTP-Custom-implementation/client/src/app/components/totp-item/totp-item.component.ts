@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { TotpItem } from '../../models/totp-item.model';
 import { CommonModule } from '@angular/common';
 import { TotpService } from '../../services/totp.service';
@@ -16,6 +23,7 @@ import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard
 })
 export class TotpItemComponent implements OnInit, OnDestroy {
   @Input() totpItem!: TotpItem;
+  @Output() updateList: EventEmitter<any> = new EventEmitter();
 
   protected period: number = 0;
   protected token!: TotpToken;
@@ -25,13 +33,13 @@ export class TotpItemComponent implements OnInit, OnDestroy {
 
   constructor(protected totpService: TotpService) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.period = this.totpService.getPeriod();
     this.generateNewToken();
     this.startInterval();
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     clearInterval(this.intervalId);
   }
 
@@ -61,5 +69,6 @@ export class TotpItemComponent implements OnInit, OnDestroy {
 
   protected onDelete() {
     this.totpService.deleteById(this.totpItem.id);
+    this.updateList.emit();
   }
 }

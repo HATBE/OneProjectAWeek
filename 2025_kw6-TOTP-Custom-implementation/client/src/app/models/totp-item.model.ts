@@ -1,5 +1,5 @@
 export type TotpItem = {
-  id: number;
+  id: string;
   name: string;
   key: string;
 };
