@@ -1,22 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { TotpItemComponent } from '../../components/totp-item/totp-item.component';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TotpService } from '../../services/totp.service';
-import { TotpItem } from '../../models/totp-item.model';
+import { TokenListComponent } from '../../components/token-list/token-list.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [TotpItemComponent, CommonModule],
+  imports: [CommonModule, TokenListComponent, RouterModule],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css',
 })
-export class LandingPageComponent implements OnInit {
-  constructor(protected totpService: TotpService) {}
-
-  protected topts: TotpItem[] = [];
-
-  public async ngOnInit() {
-    this.topts = this.totpService.getAll();
-  }
-}
+export class LandingPageComponent {}

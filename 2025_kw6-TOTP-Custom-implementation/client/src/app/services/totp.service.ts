@@ -33,10 +33,14 @@ export class TotpService {
     return this.period;
   }
 
+  public deleteById(id: number) {
+    console.log(id);
+  }
+
   public getAll(): TotpItem[] {
     return [
-      { name: 'token1', key: 'JBSWY3DPEHPK3PXP' },
-      { name: 'hand', key: 'abfbabfbafbafbdddbdb3' },
+      { id: 1, name: 'Test token 1', key: 'JBSWY3DPEHPK3PXP' },
+      { id: 2, name: 'Discord', key: 'abfbabfbafbafbdddbdb3' },
     ];
   }
 

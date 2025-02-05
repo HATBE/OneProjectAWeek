@@ -19,6 +19,8 @@
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
     "@types/jssha": "^3.0.0",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
     "jssha": "^3.3.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

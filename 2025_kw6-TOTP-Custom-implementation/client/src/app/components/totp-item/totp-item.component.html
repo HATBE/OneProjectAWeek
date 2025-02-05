@@ -1,8 +1,42 @@
-<div>
-  <div>
-    {{ totpItem.name }} ->
-    {{ token.token }}
-  </div>
+<div class="card bg-dark text-white overflow-hidden">
+  <div class="card-body p-0">
+    <div class="p-3">
+      <div>
+        <h2 class="h4 d-flex justify-content-between align-items-center">
+          <span>{{ totpItem.name }}</span>
+          <div class="dropdown">
+            <span type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-three-dots"></i>
+            </span>
+            <ul class="dropdown-menu bg-dark text-light link-light">
+              <li>
+                <span
+                  class="dropdown-item text-danger cursor-pointer"
+                  (click)="onDelete()"
+                >
+                  Löschen
+                </span>
+              </li>
+            </ul>
+          </div>
+        </h2>
+        <div class="d-flex align-items-center">
+          <span class="gradient-blue-text h1 fw-bold">{{
+            token.token | tokenFormat
+          }}</span>
+          <span class="ms-3 gradient-blue-text h5"
+            ><app-copy-to-clipboard [textToCopy]="token.token"
+          /></span>
+        </div>
+      </div>
 
-  <div><progress [value]="secsTilRefresh" [max]="period"></progress></div>
+      {{ secsTilRefresh }} seconds
+    </div>
+    <div class="progress rounded-0" style="height: 10px" role="progressbar">
+      <div
+        class="progress-bar gradient-blue"
+        [ngStyle]="{ width: (100 / period) * secsTilRefresh + '%' }"
+      ></div>
+    </div>
+  </div>
 </div>

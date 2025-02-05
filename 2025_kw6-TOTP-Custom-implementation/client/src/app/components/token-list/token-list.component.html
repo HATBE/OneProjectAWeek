@@ -1,0 +1,7 @@
+<div *ngIf="topts">
+  <div class="row g-3" style="max-width: 500px">
+    <div class="col-12" *ngFor="let totp of topts">
+      <app-totp-item [totpItem]="totp" />
+    </div>
+  </div>
+</div>

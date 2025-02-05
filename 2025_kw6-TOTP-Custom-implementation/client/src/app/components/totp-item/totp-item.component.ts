@@ -3,11 +3,14 @@ import { TotpItem } from '../../models/totp-item.model';
 import { CommonModule } from '@angular/common';
 import { TotpService } from '../../services/totp.service';
 import { TotpToken } from '../../models/totp-token.model';
+import { TokenPipe } from '../../pipes/token-format.pipe';
+import { RouterModule } from '@angular/router';
+import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
 
 @Component({
   selector: 'app-totp-item',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TokenPipe, RouterModule, CopyToClipboardComponent],
   templateUrl: './totp-item.component.html',
   styleUrl: './totp-item.component.css',
 })
@@ -54,5 +57,9 @@ export class TotpItemComponent implements OnInit, OnDestroy {
   private generateNewToken() {
     this.token = this.totpService.generateTOTP(this.totpItem.key);
     this.updateSecsTilRefresh();
+  }
+
+  protected onDelete() {
+    this.totpService.deleteById(this.totpItem.id);
   }
 }

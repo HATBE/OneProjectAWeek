@@ -1,0 +1,9 @@
+<div class="d-inline-block copy-btn">
+  <i
+    *ngIf="!copyBtnPressed"
+    class="bi bi-clipboard text-light hover-primary cursor-pointer"
+    title="copy to clipboard"
+    (click)="onClickCopyToClipboard()"
+  ></i>
+  <i *ngIf="copyBtnPressed" class="bi bi-check2 text-success"></i>
+</div>
