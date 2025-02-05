@@ -62,7 +62,7 @@ app.use(
   "*",
   cors({
     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
-    origin: "http://localhost:5173",
+    origin: "http://localhost:4200",
     credentials: true,
   })
 );
