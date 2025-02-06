@@ -6,11 +6,12 @@ import { TotpToken } from '../../models/totp-token.model';
 import { TokenPipe } from '../../pipes/token-format.pipe';
 import { RouterModule } from '@angular/router';
 import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
+import { RenameFormComponent } from '../rename-form/rename-form.component';
 
 @Component({
   selector: 'app-totp-item',
   standalone: true,
-  imports: [CommonModule, TokenPipe, RouterModule, CopyToClipboardComponent],
+  imports: [CommonModule, TokenPipe, RouterModule, CopyToClipboardComponent, RenameFormComponent],
   templateUrl: './totp-item.component.html',
   styleUrl: './totp-item.component.css',
 })
@@ -23,6 +24,8 @@ export class TotpItemComponent implements OnInit, OnDestroy {
 
   private intervalId: any;
   protected secsTilRefresh: number = 0;
+
+  protected renameMode: boolean = false;
 
   constructor(protected totpService: TotpService) {}
 
@@ -67,5 +70,15 @@ export class TotpItemComponent implements OnInit, OnDestroy {
       this.totpService.deleteById(this.totpItem.id);
       this.updateList.emit();
     }
+  }
+
+  protected toggleRename() {
+    this.renameMode = !this.renameMode;
+  }
+
+  protected onRename(newName: string) {
+    this.renameMode = false;
+    this.totpService.renameById(this.totpItem.id, newName);
+    this.totpItem.name = newName;
   }
 }

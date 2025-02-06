@@ -1,11 +1,14 @@
-<form [formGroup]="cameraForm">
-  <div class="mb-3">
-    <select formControlName="cameraId" class="form-select">
+<form [formGroup]="form">
+  <div class="input-group mb">
+    <select formControlName="cameraId" class="input-group-prepend form-select">
       <option disabled selected value="-1">Select a Camera</option>
       <option *ngFor="let camera of availableCameras" [value]="camera.deviceId">
         {{ camera.label }}
       </option>
     </select>
+
+    <button class="btn btn-primary btn-sm" type="button" (click)="onCameraSelected()">
+      Select
+    </button>
   </div>
-  <button class="btn btn-primary" type="button" (click)="onCameraSelected()">Select</button>
 </form>

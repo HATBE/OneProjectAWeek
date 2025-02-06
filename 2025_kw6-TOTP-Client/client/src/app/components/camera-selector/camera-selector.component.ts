@@ -13,16 +13,16 @@ export class CameraSelectorComponent {
   @Input() availableCameras: MediaDeviceInfo[] = [];
   @Output() cameraSelected = new EventEmitter<MediaDeviceInfo>();
 
-  cameraForm: FormGroup;
+  protected form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
-    this.cameraForm = this.formBuilder.group({
+  public constructor(private formBuilder: FormBuilder) {
+    this.form = this.formBuilder.group({
       cameraId: -1,
     });
   }
 
-  onCameraSelected() {
-    const cameraId = this.cameraForm.getRawValue().cameraId;
+  protected onCameraSelected() {
+    const cameraId = this.form.getRawValue().cameraId;
     const selectedCamera = this.availableCameras.find((camera) => camera.deviceId === cameraId);
     if (selectedCamera) {
       this.cameraSelected.emit(selectedCamera);

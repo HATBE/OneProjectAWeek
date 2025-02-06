@@ -7,9 +7,10 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { BarcodeFormat } from '@zxing/library';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
-import { OTPAuthData, OtpAuthParseService } from '../../../services/otpauth-parse.service';
+import { OtpAuthParseService } from '../../../services/otpauth-parse.service';
 import { ErrorBannerComponent } from '../../banner/error-banner/error-banner.component';
 import { CameraSelectorComponent } from '../../camera-selector/camera-selector.component';
+import { OTPAuthData } from '../../../models/totp-auth-data.model';
 
 @Component({
   selector: 'app-create-token-camera',

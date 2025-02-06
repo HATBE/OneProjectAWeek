@@ -1,15 +1,5 @@
 import { Injectable } from '@angular/core';
-
-export interface OTPAuthData {
-  type: string;
-  label: string;
-  secret: string;
-  issuer?: string;
-  algorithm?: string;
-  digits?: number;
-  period?: number;
-  counter?: number;
-}
+import { OTPAuthData } from '../models/totp-auth-data.model';
 
 @Injectable({
   providedIn: 'root',

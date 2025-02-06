@@ -41,7 +41,7 @@ export class TotpService {
     try {
       let items: TotpItem[] = JSON.parse(itemsBefore ?? '[]');
 
-      items = items.filter((item) => item.id !== id); // Fixed: Added return statement implicitly
+      items = items.filter((item) => item.id !== id);
 
       localStorage.setItem(this.storageKey, JSON.stringify(items));
     } catch (error) {
@@ -61,6 +61,25 @@ export class TotpService {
       localStorage.setItem(this.storageKey, JSON.stringify(items));
     } catch (error) {
       console.error('Error creating item:', error);
+    }
+  }
+
+  public renameById(id: string, name: string) {
+    const itemsBefore = localStorage.getItem(this.storageKey);
+
+    try {
+      let items: TotpItem[] = JSON.parse(itemsBefore ?? '[]');
+
+      items = items.map((item) => {
+        if (item.id === id) {
+          return { ...item, name };
+        }
+        return item;
+      });
+
+      localStorage.setItem(this.storageKey, JSON.stringify(items));
+    } catch (error) {
+      console.error('Error deleting item:', error);
     }
   }
 

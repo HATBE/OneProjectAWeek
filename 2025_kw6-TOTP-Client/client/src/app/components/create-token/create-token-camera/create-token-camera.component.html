@@ -1,5 +1,8 @@
 <div *ngIf="!foundOtp">
-  <app-loading-spinner *ngIf="isLoading" />
+  <div *ngIf="isLoading">
+    <div>Please allow the camera.</div>
+    <app-loading-spinner />
+  </div>
   <app-error-banner *ngIf="error" [message]="error"></app-error-banner>
 
   <app-camera-selector
