@@ -25,8 +25,6 @@ export class TotpItemComponent implements OnInit, OnDestroy {
   private intervalId: any;
   protected secsTilRefresh: number = 0;
 
-  protected renameMode: boolean = false;
-
   constructor(protected totpService: TotpService) {}
 
   public ngOnInit() {
@@ -72,12 +70,7 @@ export class TotpItemComponent implements OnInit, OnDestroy {
     }
   }
 
-  protected toggleRename() {
-    this.renameMode = !this.renameMode;
-  }
-
   protected onRename(newName: string) {
-    this.renameMode = false;
     this.totpService.renameById(this.totpItem.id, newName);
     this.totpItem.name = newName;
   }

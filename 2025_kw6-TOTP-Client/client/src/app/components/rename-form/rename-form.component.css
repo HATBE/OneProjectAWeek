@@ -1,0 +1,5 @@
+.editable-div:focus {
+  border-bottom: 1px solid;
+  margin-bottom: -1px;
+  outline: 0;
+}

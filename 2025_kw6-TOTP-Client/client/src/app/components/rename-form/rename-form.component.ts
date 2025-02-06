@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-rename-form',
@@ -10,30 +10,37 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './rename-form.component.css',
 })
 export class RenameFormComponent implements OnInit {
-  @Input() origText: string = '';
+  @Input() input: string = '';
   @Output() onRename: EventEmitter<string> = new EventEmitter();
 
-  protected form: FormGroup;
+  private newText: string = '';
 
-  public constructor(private formBuilder: FormBuilder) {
-    this.form = this.formBuilder.group({
-      text: null,
-    });
+  public ngOnInit() {
+    this.newText = this.input;
   }
 
-  public ngOnInit(): void {
-    this.form.patchValue({ text: this.origText });
+  protected onInput(event: Event) {
+    const div = event.target as HTMLDivElement;
+
+    this.newText = div.innerHTML;
   }
 
   protected onSubmit() {
-    const text = this.form.getRawValue().text;
-
-    console.log(text);
-
-    if (text === '' || !text) {
+    if (this.newText === '' || !this.newText) {
       return;
     }
 
-    this.onRename.emit(text);
+    this.onRename.emit(this.newText);
+  }
+
+  protected onSave() {
+    this.onSubmit();
+  }
+
+  protected onKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this.onSubmit();
+    }
   }
 }
