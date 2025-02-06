@@ -1,0 +1,20 @@
+<div class="py-3" *ngIf="topts.length <= 0">
+  There are no tokens yet.
+  <br />
+  Add your first by clicking on the plus down below.
+</div>
+
+<div class="row g-3">
+  <div class="col-12 col-md-6 col-xl-4" style="height: 158px" *ngFor="let totp of topts">
+    <app-totp-item [totpItem]="totp" (updateList)="updateList()" />
+  </div>
+  <div class="col-12 col-md-6 col-xl-4" style="height: 158px">
+    <a class="link-light" routerLink="/add" routerLinkActive="router-link-active">
+      <div
+        class="hover-create-btn w-100 h-100 d-flex justify-content-center align-items-center border border-3 border-light border-dashed rounded"
+      >
+        <i class="h1 bi bi-plus-circle"></i>
+      </div>
+    </a>
+  </div>
+</div>

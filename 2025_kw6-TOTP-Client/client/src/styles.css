@@ -1,0 +1,81 @@
+:root {
+  --bs-tertiary-bg: #f1f1f1;
+  --bs-tertiary-bg-rgb: 241, 241, 241;
+}
+
+body {
+  background-color: #1c1c1c;
+  color: white;
+  overflow-x: hidden;
+}
+.navbar-toggler {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+main {
+  padding: 1rem 0;
+}
+
+.dropdown-menu.bg-dark .dropdown-item:hover {
+  background-color: #3b3b3b !important;
+  cursor: pointer;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+.gradient-blue-text {
+  background: linear-gradient(to right, #00c4ff, #00a6ff, #006fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-blue {
+  background: linear-gradient(to right, #00c4ff, #00a6ff, #006fff);
+}
+
+.progress {
+  background-color: #aaa !important;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+input:focus,
+input:active,
+select:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: inherit !important;
+}
+
+input,
+textarea,
+select {
+  background-color: var(--bs-dark) !important;
+  border: none !important;
+  outline: none;
+  color: var(--bs-light) !important;
+}
+
+.card {
+  outline: none;
+  border: none;
+}
+label {
+  margin: 0;
+  font-weight: bold;
+  user-select: none;
+  color: var(--bs-light) !important;
+}
+
+.border-dashed {
+  border-style: dashed !important;
+}
