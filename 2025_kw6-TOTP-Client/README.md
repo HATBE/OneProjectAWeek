@@ -1,27 +1,39 @@
-# Client
+# TOTP Client
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.6.
+A basic TOTP client build with angular.\
+You can add a token, remove a token or rename it.\
+You can add a token by scanning a QR code or by manually inserting it
 
-## Development server
+## built with
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Angular
+- Typescript
+- jssha for hash
 
-## Code scaffolding
+## Functionality
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The tokens are stored (unencrypted) in the localstorage of the browser. (just a concept, ok...)
 
-## Build
+### startscreen
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+![](.img/start.png)
 
-## Running unit tests
+Add a new token by clicking on the plus icon.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Add token by camera
 
-## Running end-to-end tests
+![](.img/camera-add.png)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Add token by form
 
-## Further help
+![](.img/form-add.png)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### View tokens
+
+![](.img/tokens.png)
+
+## Video
+
+https://www.youtube.com/watch?v=mYn_DObDgNE
+
+[![Youtube video](https://img.youtube.com/vi/mYn_DObDgNE/0.jpg)](https://www.youtube.com/watch?v=mYn_DObDgNE)

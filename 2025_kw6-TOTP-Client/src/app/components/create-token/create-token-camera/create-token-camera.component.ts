@@ -28,7 +28,8 @@ import { OTPAuthData } from '../../../models/totp-auth-data.model';
   styleUrl: './create-token-camera.component.css',
 })
 export class CreateTokenCameraComponent implements TokenCreator {
-  @Output() onCreate: EventEmitter<TotpItemForm> = new EventEmitter<TotpItemForm>();
+  @Output() onCreate: EventEmitter<TotpItemForm> =
+    new EventEmitter<TotpItemForm>();
 
   protected availableCameras: MediaDeviceInfo[] = [];
   protected selectedCamera: MediaDeviceInfo | undefined = undefined;
@@ -44,6 +45,7 @@ export class CreateTokenCameraComponent implements TokenCreator {
     this.cameraEnabled = false;
     try {
       this.foundOtp = OtpAuthParseService.parseOTPAuthURL(scan);
+      console.log(this.foundOtp);
     } catch (error) {
       this.setError('ERROR!');
     }
@@ -71,7 +73,10 @@ export class CreateTokenCameraComponent implements TokenCreator {
     if (!this.foundOtp) {
       return;
     }
-    this.onCreate.emit({ secret: this.foundOtp.secret, name: this.foundOtp.label });
+    this.onCreate.emit({
+      secret: this.foundOtp.secret,
+      name: this.foundOtp.label,
+    });
   }
 
   private setError(message: string): void {
