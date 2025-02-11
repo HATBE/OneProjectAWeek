@@ -1,3 +1,5 @@
-<div *ngIf="columns">
-  <app-kanban-column *ngFor="let column of columns" [column]="column" />
+<div class="d-flex overflow-scroll w-100">
+  <div class="column" *ngFor="let column of columns">
+    <app-kanban-column [column]="column" />
+  </div>
 </div>
