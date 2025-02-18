@@ -79,10 +79,23 @@ export class MotorcycleService {
       imageUrlBase64: 'base64//:dsd',
       make: 'Suzuki',
       model: 'GSX-S 1000',
-      name: 'Suzuki',
+      name: 'Blue big Suzuki',
       odoCurrentKm: 88888,
       odoFromKm: 37000,
-      productionYear: 2020,
+      productionYear: 2015,
+    });
+
+    this.create({
+      ccm: 749,
+      dateNoLongerOwned: null,
+      dateOfPurchase: new Date('17-07-2005'),
+      imageUrlBase64: 'base64//:dsd',
+      make: 'Suzuki',
+      model: 'GSR 750',
+      name: 'Blue small Suzuki',
+      odoCurrentKm: 88888,
+      odoFromKm: 37000,
+      productionYear: 2012,
     });
   }
 }
