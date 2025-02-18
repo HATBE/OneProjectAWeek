@@ -1,0 +1,9 @@
+<div [ngClass]="bannerClass" class="alert w-100 m-0">
+  <i class="bi" [ngClass]="bsIcon"></i>
+  <span *ngIf="title" class="ms-2 fw-bold">{{ title }}</span>
+  <span class="ms-2" style="white-space: pre-line">{{ message }}</span>
+  <a target="{{ target }}" class="ms-2 text-reset" *ngIf="httpLink" [href]="httpLink">
+    <span *ngIf="httpLinkTitle">{{ httpLinkTitle }}</span>
+    <span *ngIf="!httpLinkTitle">{{ httpLink }}</span>
+  </a>
+</div>
